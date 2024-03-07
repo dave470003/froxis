@@ -34,9 +34,9 @@ func _create_walls_and_floor():
 	for x in range(0, _new_DungeonSize.MAX_X):
 		for y in range(0, _new_DungeonSize.MAX_Y):
 			if (x == 0 || y == 0 || x == _new_DungeonSize.MAX_X - 1 || y == _new_DungeonSize.MAX_Y - 1):
-				_create_sprite(Wall, _new_GroupName.Building, x, y)
+				_create_sprite(Wall, _new_GroupName.BUILDING, x, y)
 			else:
-				_create_sprite(Floor, _new_GroupName.Building, x, y)
+				_create_sprite(Floor, _new_GroupName.BUILDING, x, y)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta) -> void:
