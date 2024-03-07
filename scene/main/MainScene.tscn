@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bk6dytwsq5jkx"]
+[gd_scene load_steps=4 format=3 uid="uid://bk6dytwsq5jkx"]
 
 [ext_resource type="Script" path="res://scene/main/InitWorld.gd" id="1_2yf6q"]
 [ext_resource type="PackedScene" uid="uid://dpl6chwdfk2qh" path="res://scene/main/MainGUI.tscn" id="2_qbref"]
+[ext_resource type="Script" path="res://scene/main/PCMove.gd" id="3_s2owl"]
 
 [node name="MainScene" type="Node2D"]
 
@@ -9,3 +10,6 @@
 script = ExtResource("1_2yf6q")
 
 [node name="MainGUI" parent="." instance=ExtResource("2_qbref")]
+
+[node name="PCMove" type="Node2D" parent="."]
+script = ExtResource("3_s2owl")
