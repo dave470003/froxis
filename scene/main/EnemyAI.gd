@@ -1,5 +1,8 @@
 extends Node2D
 
+const Schedule := preload("res://scene/main/Schedule.gd")
+
+var _ref_Schedule: Schedule
 var _new_GroupName := preload("res://library/GroupName.gd").new()
 
 # Called when the node enters the scene tree for the first time.

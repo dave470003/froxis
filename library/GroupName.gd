@@ -1,5 +1,6 @@
 # GroupName.gd
 
 const PC: String = "pc"
-const BUILDING: String = "building"
+const FLOOR: String = "floor"
 const DWARF: String = "dwarf"
+const WALL: String = "wall"
