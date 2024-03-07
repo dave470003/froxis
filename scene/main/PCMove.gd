@@ -2,6 +2,7 @@ extends Node2D
 
 const Schedule := preload("res://scene/main/Schedule.gd")
 const DungeonBoard := preload("res://scene/main/DungeonBoard.gd")
+const PC_ATTACK: String = "PCAttack"
 
 var _new_InputName := preload("res://library/InputName.gd").new()
 var _new_ConvertCoord := preload("res://library/ConvertCoord.gd").new()
@@ -57,6 +58,9 @@ func _try_move(x: int, y: int) -> void:
 		print("Cannot leave dungeon.")
 	elif _ref_DungeonBoard.has_sprite(_new_GroupName.WALL, x, y):
 		print("Cannot pass wall.")
+	elif _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, x, y):
+		set_process_unhandled_input(false)
+		get_node(PC_ATTACK).attack(_new_GroupName.DWARF, x, y)
 	else:
 		set_process_unhandled_input(false)
 		_pc.position = _new_ConvertCoord.index_to_vector(x, y)

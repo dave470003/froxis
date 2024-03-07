@@ -9,6 +9,7 @@ var _actors: Array = [null]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_node("../InitWorld").sprite_created.connect(_on_InitWorld_sprite_created)
+	get_node("../RemoveObject").sprite_removed.connect(_on_RemoveObject_sprite_removed)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -36,3 +37,11 @@ func _goto_next() -> void:
 
 	if _pointer > len(_actors) - 1:
 		_pointer = 0
+
+func _on_RemoveObject_sprite_removed(remove_sprite: Sprite2D,
+	_group_name: String, _x: int, _y: int) -> void:
+
+	var current_sprite: Sprite2D = _get_current()
+
+	_actors.erase(remove_sprite)
+	_pointer = _actors.find(current_sprite)

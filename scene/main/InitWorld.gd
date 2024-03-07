@@ -3,6 +3,7 @@ extends Node2D
 signal sprite_created(new_sprite)
 
 @onready var Player := preload("res://sprite/PC.tscn") as PackedScene
+@onready var Dwarf := preload("res://sprite/Dwarf.tscn") as PackedScene
 @onready var Wall := preload("res://sprite/Wall.tscn") as PackedScene
 @onready var Floor := preload("res://sprite/Floor.tscn") as PackedScene
 
@@ -29,6 +30,11 @@ func _create_sprite(prefab: PackedScene, group: String, x: int, y: int,
 func _create_player():
 	_create_sprite(Player, _new_GroupName.PC, 1, 1)
 
+func _create_dwarves():
+	_create_sprite(Dwarf, _new_GroupName.DWARF, 10, 1)
+	_create_sprite(Dwarf, _new_GroupName.DWARF, 3, 13)
+	_create_sprite(Dwarf, _new_GroupName.DWARF, 7, 8)
+
 func _create_walls_and_floor():
 	# for now will just be one big room.
 	for x in range(0, _new_DungeonSize.MAX_X):
@@ -48,4 +54,5 @@ func _unhandled_input(event):
 			_initialized = true
 			_create_walls_and_floor()
 			_create_player()
+			_create_dwarves()
 			set_process_unhandled_input(false)

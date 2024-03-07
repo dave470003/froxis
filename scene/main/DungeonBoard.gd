@@ -8,6 +8,7 @@ var _sprite_dict: Dictionary
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_node("../InitWorld").sprite_created.connect(_on_InitWorld_sprite_created)
+	get_node("../RemoveObject").sprite_removed.connect(_on_RemoveObject_sprite_removed)
 	_init_dict()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -50,3 +51,7 @@ func _init_dict() -> void:
 		for x in range(_new_DungeonSize.MAX_X):
 			_sprite_dict[g][x] = []
 			_sprite_dict[g][x].resize(_new_DungeonSize.MAX_Y)
+
+func _on_RemoveObject_sprite_removed(_sprite: Sprite2D, group_name: String,
+		x: int, y: int) -> void:
+	_sprite_dict[group_name][x][y] = null
