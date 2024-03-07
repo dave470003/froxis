@@ -1,0 +1,38 @@
+extends Node2D
+
+@onready var Player := preload("res://sprite/PC.tscn") as PackedScene
+@onready var Wall := preload("res://sprite/Wall.tscn") as PackedScene
+@onready var Floor := preload("res://sprite/Floor.tscn") as PackedScene
+
+var _new_GroupName := preload("res://library/GroupName.gd").new()
+var _new_ConvertCoord := preload("res://library/ConvertCoord.gd").new()
+var _new_DungeonSize := preload("res://library/DungeonSize.gd").new()
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	_create_walls_and_floor()
+	_create_player()
+
+func _create_sprite(prefab: PackedScene, group: String, x: int, y: int,
+		x_offset: int = 0, y_offset: int = 0) -> void:
+	var sprite = prefab.instantiate()
+	sprite.position = _new_ConvertCoord.index_to_vector(x, y)
+	sprite.add_to_group(group)
+
+	add_child(sprite)
+
+func _create_player():
+	_create_sprite(Player, _new_GroupName.PC, 1, 1)
+
+func _create_walls_and_floor():
+	# for now will just be one big room.
+	for x in range(0, _new_DungeonSize.MAX_X):
+		for y in range(0, _new_DungeonSize.MAX_Y):
+			if (x == 0 || y == 0 || x == _new_DungeonSize.MAX_X - 1 || y == _new_DungeonSize.MAX_Y - 1):
+				_create_sprite(Wall, _new_GroupName.Building, x, y)
+			else:
+				_create_sprite(Floor, _new_GroupName.Building, x, y)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass

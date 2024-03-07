@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://6wwc8qstr4f2"]
+
+[ext_resource type="FontFile" uid="uid://djj8di0dfokks" path="res://resources/FiraCode-Regular.ttf" id="1_bb64q"]
+
+[resource]
+default_font = ExtResource("1_bb64q")
+default_font_size = 24
