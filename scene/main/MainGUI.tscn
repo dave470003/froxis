@@ -1,32 +1,35 @@
-[gd_scene load_steps=2 format=3 uid="uid://dpl6chwdfk2qh"]
+[gd_scene load_steps=5 format=3 uid="uid://dpl6chwdfk2qh"]
 
 [ext_resource type="Theme" uid="uid://6wwc8qstr4f2" path="res://scene/main/FiraTheme.tres" id="1_wwogm"]
+[ext_resource type="PackedScene" uid="uid://c0i6fvkncwr2i" path="res://scene/main/GUIText.tscn" id="2_07pmd"]
+[ext_resource type="Script" path="res://scene/main/Modeline.gd" id="3_dx6ku"]
+[ext_resource type="Script" path="res://scene/main/SidebarVBoxContainer.gd" id="3_y2vix"]
 
-[node name="MainGUI" type="Control"]
-layout_mode = 3
-anchors_preset = 0
+[node name="MainGUI" type="MarginContainer"]
 offset_right = 800.0
 offset_bottom = 600.0
 theme = ExtResource("1_wwogm")
 
-[node name="Bottom" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 34.0
-offset_top = -25.0
-offset_right = 214.0
-offset_bottom = 6.0
-grow_vertical = 0
-pivot_offset = Vector2(2.08165e-12, 2.08165e-12)
-text = "Hello world!
+[node name="MainHBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Modeline" parent="MainHBoxContainer" instance=ExtResource("2_07pmd")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+script = ExtResource("3_dx6ku")
+
+[node name="SidebarVBoxContainer" type="VBoxContainer" parent="MainHBoxContainer"]
+custom_minimum_size = Vector2(180, 2.08165e-12)
+layout_mode = 2
+script = ExtResource("3_y2vix")
+
+[node name="Turn" parent="MainHBoxContainer/SidebarVBoxContainer" instance=ExtResource("2_07pmd")]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Turn
 "
 
-[node name="Sidebar" type="Label" parent="."]
-layout_mode = 0
-offset_left = 620.0
-offset_top = 34.0
-offset_right = 684.0
-offset_bottom = 57.0
-text = "Turn: 42"
+[node name="Help" parent="MainHBoxContainer/SidebarVBoxContainer" instance=ExtResource("2_07pmd")]
+layout_mode = 2
+text = "Help"

@@ -12,6 +12,8 @@ var _ref_Schedule: Schedule
 var _ref_DungeonBoard: DungeonBoard
 var _pc: Sprite2D
 
+signal pc_moved(message)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_node("../Schedule").turn_started.connect(_on_Schedule_turn_started)
@@ -55,9 +57,9 @@ func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
 
 func _try_move(x: int, y: int) -> void:
 	if not _ref_DungeonBoard.is_inside_dungeon(x, y):
-		print("Cannot leave dungeon.")
+		pc_moved.emit("Cannot leave dungeon.")
 	elif _ref_DungeonBoard.has_sprite(_new_GroupName.WALL, x, y):
-		print("Cannot pass wall.")
+		pc_moved.emit("Cannot pass wall.")
 	elif _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, x, y):
 		set_process_unhandled_input(false)
 		get_node(PC_ATTACK).attack(_new_GroupName.DWARF, x, y)

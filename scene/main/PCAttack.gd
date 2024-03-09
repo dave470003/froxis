@@ -8,6 +8,8 @@ var _ref_DungeonBoard: DungeonBoard
 var _ref_RemoveObject: RemoveObject
 var _ref_Schedule: Schedule
 
+signal pc_attacked
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -20,6 +22,6 @@ func _process(delta):
 func attack(group_name: String, x: int, y: int) -> void:
 	if not _ref_DungeonBoard.has_sprite(group_name, x, y):
 		return
-	print("Attack.")
+	pc_attacked.emit("You kill Urist McRogueliker! :(")
 	_ref_RemoveObject.remove(group_name, x, y)
 	_ref_Schedule.end_turn()

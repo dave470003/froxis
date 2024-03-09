@@ -6,6 +6,8 @@ var _ref_Schedule: Schedule
 var _new_GroupName := preload("res://library/GroupName.gd").new()
 var _new_ConvertCoord := preload("res://library/ConvertCoord.gd").new()
 
+signal enemy_warned
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_node("../Schedule").turn_started.connect(_on_Schedule_turn_started)
@@ -22,7 +24,7 @@ func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
 	var _pc = _ref_Schedule._actors[0]
 
 	if _pc_is_close(_pc, current_sprite):
-		print("Too close!")
+		enemy_warned.emit("Urist McRogueliker is scared!")
 	_ref_Schedule.end_turn()
 
 func _pc_is_close(source: Sprite2D, target: Sprite2D) -> bool:

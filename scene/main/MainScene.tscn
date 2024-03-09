@@ -17,6 +17,14 @@ script = ExtResource("1_x6a0h")
 script = ExtResource("1_2yf6q")
 
 [node name="MainGUI" parent="." instance=ExtResource("2_qbref")]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 780.0
+offset_bottom = 580.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
 [node name="PCMove" type="Node2D" parent="."]
 script = ExtResource("3_s2owl")

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0i6fvkncwr2i"]
+
+[ext_resource type="Theme" uid="uid://6wwc8qstr4f2" path="res://scene/main/FiraTheme.tres" id="1_dadyd"]
+
+[node name="Modeline" type="Label"]
+theme = ExtResource("1_dadyd")
+text = "Modeline"
