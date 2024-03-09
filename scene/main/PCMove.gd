@@ -36,18 +36,36 @@ func _unhandled_input(event: InputEvent) -> void:
 	var x: int = source[0]
 	var y: int = source[1]
 
-	if event.is_action_pressed(_new_InputName.MOVE_LEFT) && !event.is_echo():
-		x -= 1
-	elif event.is_action_pressed(_new_InputName.MOVE_RIGHT) && !event.is_echo():
-		x += 1
-	elif event.is_action_pressed(_new_InputName.MOVE_UP) && !event.is_echo():
-		y -= 1
-	elif event.is_action_pressed(_new_InputName.MOVE_DOWN) && !event.is_echo():
-		y += 1
+	if _is_move_input(event):
+		if event.is_action_pressed(_new_InputName.MOVE_LEFT) && !event.is_echo():
+			x -= 1
+		elif event.is_action_pressed(_new_InputName.MOVE_RIGHT) && !event.is_echo():
+			x += 1
+		elif event.is_action_pressed(_new_InputName.MOVE_UP) && !event.is_echo():
+			y -= 1
+		elif event.is_action_pressed(_new_InputName.MOVE_DOWN) && !event.is_echo():
+			y += 1
+	elif _is_reload_input(event):
+		print("reload")
 	else:
 		return
 
 	_try_move(x,y)
+
+func _is_move_input(event):
+	if (event.is_action_pressed(_new_InputName.MOVE_LEFT)
+		|| event.is_action_pressed(_new_InputName.MOVE_RIGHT)
+		|| event.is_action_pressed(_new_InputName.MOVE_UP)
+		|| event.is_action_pressed(_new_InputName.MOVE_DOWN)
+	):
+		if !event.is_echo():
+			return true
+	return false
+
+func _is_reload_input(event):
+	if event.is_action_pressed(_new_InputName.RELOAD):
+		return true
+	return false
 
 func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
 	if current_sprite.is_in_group(_new_GroupName.PC):

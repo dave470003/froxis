@@ -8,6 +8,7 @@ func _ready():
 	var removeObject = get_node("RemoveObject")
 	get_node("PCMove")._ref_Schedule = schedule
 	get_node("EnemyAI")._ref_Schedule = schedule
+	get_node("InitWorld")._ref_DungeonBoard = dungeonBoard
 	get_node("PCMove")._ref_DungeonBoard = dungeonBoard
 	get_node("PCMove/PCAttack")._ref_DungeonBoard = dungeonBoard
 	get_node("PCMove/PCAttack")._ref_RemoveObject = removeObject
