@@ -16,8 +16,6 @@ signal pc_moved(message)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	get_node("../Schedule").turn_started.connect(_on_Schedule_turn_started)
-	get_node("../InitWorld").sprite_created.connect(_on_InitWorld_sprite_created)
 	set_process_unhandled_input(false)
 
 

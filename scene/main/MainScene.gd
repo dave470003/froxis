@@ -1,20 +1,77 @@
-extends Node2D
+extends "res://library/RootNodeTemplate.gd"
 
+const INIT_WORLD = "InitWorld"
+const PC_MOVE = "PCMove"
+const PC_ATTACK = "PCMove/PCAttack"
+const SCHEDULE = "Schedule"
+const DUNGEON = "DungeonBoard"
+const REMOVE = "RemoveObject"
+const NPC = "EnemyAI"
+const SIDEBAR = "MainGUI/MainHBoxContainer/SidebarVBoxContainer"
+const MODELINE = "MainGUI/MainHBoxContainer/Modeline"
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	var schedule = get_node("Schedule")
-	var dungeonBoard = get_node("DungeonBoard")
-	var removeObject = get_node("RemoveObject")
-	get_node("PCMove")._ref_Schedule = schedule
-	get_node("EnemyAI")._ref_Schedule = schedule
-	get_node("InitWorld")._ref_DungeonBoard = dungeonBoard
-	get_node("PCMove")._ref_DungeonBoard = dungeonBoard
-	get_node("PCMove/PCAttack")._ref_DungeonBoard = dungeonBoard
-	get_node("PCMove/PCAttack")._ref_RemoveObject = removeObject
-	get_node("PCMove/PCAttack")._ref_Schedule = schedule
-	get_node("RemoveObject")._ref_DungeonBoard = dungeonBoard
+const SIGNAL_BIND: Array = [
+	[
+		"sprite_created", "_on_InitWorld_sprite_created",
+		INIT_WORLD,
+		PC_MOVE, NPC, SCHEDULE, DUNGEON,
+	],
+	[
+		"sprite_removed", "_on_RemoveObject_sprite_removed",
+		REMOVE,
+		SCHEDULE, DUNGEON,
+	],
+	[
+		"turn_started", "_on_Schedule_turn_started",
+		SCHEDULE,
+		PC_MOVE, NPC, SIDEBAR
+	],
+	[
+		"turn_ended", "_on_Schedule_turn_ended",
+		SCHEDULE,
+		MODELINE
+	],
+	[
+		"enemy_warned", "_on_EnemyAI_enemy_warned",
+		NPC,
+		MODELINE
+	],
+	[
+		"pc_moved", "_on_PCMove_pc_moved",
+		PC_MOVE,
+		MODELINE
+	],
+	[
+		"pc_attacked", "_on_PCAttack_pc_attacked",
+		PC_ATTACK,
+		MODELINE
+	],
+]
+
+const NODE_REF: Array = [
+	[
+		"_ref_DungeonBoard",
+		DUNGEON,
+		PC_MOVE, PC_ATTACK, REMOVE, INIT_WORLD,
+	],
+	[
+		"_ref_Schedule",
+		SCHEDULE,
+		NPC, PC_ATTACK, PC_MOVE
+	],
+	[
+		"_ref_RemoveObject",
+		REMOVE,
+		PC_ATTACK
+	],
+]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func _ready():
+	_set_signal(SIGNAL_BIND)
+	_set_node_ref(NODE_REF)
+
+	print(get_node("Schedule").turn_ended.get_connections())

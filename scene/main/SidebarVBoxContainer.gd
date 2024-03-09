@@ -9,7 +9,6 @@ var _new_GroupName := preload("res://library/GroupName.gd").new()
 
 
 func _ready() -> void:
-	get_node("../../../Schedule").turn_started.connect(_on_Schedule_turn_started)
 	_label_help.text = "RL Demo"
 	_update_turn()
 

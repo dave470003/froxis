@@ -10,8 +10,7 @@ signal enemy_warned
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	get_node("../Schedule").turn_started.connect(_on_Schedule_turn_started)
-
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

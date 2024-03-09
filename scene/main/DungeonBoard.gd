@@ -7,8 +7,6 @@ var _sprite_dict: Dictionary
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	get_node("../InitWorld").sprite_created.connect(_on_InitWorld_sprite_created)
-	get_node("../RemoveObject").sprite_removed.connect(_on_RemoveObject_sprite_removed)
 	_init_dict()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
