@@ -7,6 +7,7 @@ var _new_GroupName := preload("res://library/GroupName.gd").new()
 var _new_ConvertCoord := preload("res://library/ConvertCoord.gd").new()
 
 signal enemy_warned
+signal enemy_attack
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,7 +24,7 @@ func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
 	var _pc = _ref_Schedule._actors[0]
 
 	if _pc_is_close(_pc, current_sprite):
-		enemy_warned.emit("Urist McRogueliker is scared!")
+		enemy_attack.emit(1)
 	_ref_Schedule.end_turn()
 
 func _pc_is_close(source: Sprite2D, target: Sprite2D) -> bool:

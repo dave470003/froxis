@@ -17,6 +17,10 @@ func _on_InitWorld_set_health(health: int):
 	_health = health
 	_update_health()
 
+func _on_EnemyAI_enemy_attack(damage: int):
+	_health = _health - damage
+	_update_health()
+
 func _update_health():
 	var sprite: TextureRect
 

@@ -37,6 +37,11 @@ const SIGNAL_BIND: Array = [
 		MODELINE
 	],
 	[
+		"enemy_attack", "_on_EnemyAI_enemy_attack",
+		NPC,
+		MODELINE, SIDEBAR
+	],
+	[
 		"pc_moved", "_on_PCMove_pc_moved",
 		PC_MOVE,
 		MODELINE

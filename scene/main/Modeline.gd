@@ -22,6 +22,10 @@ func _on_EnemyAI_enemy_warned(message: String) -> void:
 	text = message
 
 
+func _on_EnemyAI_enemy_attack(damage: int) -> void:
+	text = "Enemy attacks for {0}".format([damage])
+
+
 func _on_PCMove_pc_moved(message: String) -> void:
 	text = message
 
