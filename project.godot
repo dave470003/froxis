@@ -57,6 +57,10 @@ reload={
 ]
 }
 
+[input_devices]
+
+pointing/main_scene="res://scene/main/MainScene.tscn"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

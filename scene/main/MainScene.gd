@@ -46,6 +46,11 @@ const SIGNAL_BIND: Array = [
 		PC_ATTACK,
 		MODELINE
 	],
+	[
+		"set_health", "_on_InitWorld_set_health",
+		INIT_WORLD,
+		SIDEBAR
+	],
 ]
 
 const NODE_REF: Array = [

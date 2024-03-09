@@ -16,6 +16,7 @@ var _new_InputName := preload("res://library/InputName.gd").new()
 var _initialized: bool = false
 
 signal sprite_created(new_sprite)
+signal set_health(health)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -59,6 +60,9 @@ func _create_walls_and_floor():
 			else:
 				_create_sprite(Floor, _new_GroupName.FLOOR, x, y)
 
+func _set_health():
+	set_health.emit(3)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta) -> void:
 	pass
@@ -70,4 +74,5 @@ func _unhandled_input(event):
 			_create_walls_and_floor()
 			_create_player()
 			_create_dwarves()
+			_set_health()
 			set_process_unhandled_input(false)
