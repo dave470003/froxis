@@ -22,6 +22,6 @@ func _process(delta):
 func attack(group_name: String, x: int, y: int) -> void:
 	if not _ref_DungeonBoard.has_sprite(group_name, x, y):
 		return
-	pc_attacked.emit("You kill Urist McRogueliker! :(")
 	_ref_RemoveObject.remove(group_name, x, y)
 	_ref_Schedule.end_turn()
+	pc_attacked.emit("You kill Urist McRogueliker! :(")

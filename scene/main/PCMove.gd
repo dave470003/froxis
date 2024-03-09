@@ -36,17 +36,18 @@ func _unhandled_input(event: InputEvent) -> void:
 	var x: int = source[0]
 	var y: int = source[1]
 
-	if event.is_action_pressed(_new_InputName.MOVE_LEFT):
+	if event.is_action_pressed(_new_InputName.MOVE_LEFT) && !event.is_echo():
 		x -= 1
-	elif event.is_action_pressed(_new_InputName.MOVE_RIGHT):
+	elif event.is_action_pressed(_new_InputName.MOVE_RIGHT) && !event.is_echo():
 		x += 1
-	elif event.is_action_pressed(_new_InputName.MOVE_UP):
+	elif event.is_action_pressed(_new_InputName.MOVE_UP) && !event.is_echo():
 		y -= 1
-	elif event.is_action_pressed(_new_InputName.MOVE_DOWN):
+	elif event.is_action_pressed(_new_InputName.MOVE_DOWN) && !event.is_echo():
 		y += 1
+	else:
+		return
 
 	_try_move(x,y)
-	get_node("../Schedule").end_turn()
 
 func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
 	if current_sprite.is_in_group(_new_GroupName.PC):
