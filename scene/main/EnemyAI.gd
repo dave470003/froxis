@@ -2,9 +2,11 @@ extends Node2D
 
 const Schedule := preload("res://scene/main/Schedule.gd")
 const DungeonBoard := preload("res://scene/main/DungeonBoard.gd")
+const RemoveObject := preload("res://scene/main/RemoveObject.gd")
 
 var _ref_Schedule: Schedule
 var _ref_DungeonBoard: DungeonBoard
+var _ref_RemoveObject: RemoveObject
 var _new_GroupName := preload("res://library/GroupName.gd").new()
 var _new_ConvertCoord := preload("res://library/ConvertCoord.gd").new()
 var _new_Colours := preload("res://library/Colours.gd").new()
@@ -27,10 +29,11 @@ func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
 	var _pc = _ref_Schedule._actors[0]
 
 	move_to_pc(_pc, current_sprite)
-
-	if _pc_is_close(_pc, current_sprite):
-		await _animate_enemy_attack(_pc, current_sprite)
-		enemy_attack.emit(1)
+	if !check_for_traps(current_sprite):
+		if _pc_is_close(_pc, current_sprite):
+			await _animate_enemy_attack(_pc, current_sprite)
+			enemy_attack.emit(1)
+			
 	_ref_Schedule.end_turn()
 
 func _pc_is_close(source: Sprite2D, target: Sprite2D) -> bool:
@@ -77,5 +80,13 @@ func _animate_enemy_attack(pc: Sprite2D, enemy: Sprite2D):
 	tween.tween_property(pc, "modulate", Color(_new_Colours.LIGHT_GREY), 0.2)
 	await tween.finished
 
+func check_for_traps(current):
+	var current_pos: Array = _new_ConvertCoord.vector_to_array(current.position)
+	if _ref_DungeonBoard.has_sprite(_new_GroupName.TRAP, current_pos[0], current_pos[1]):
+		trap_detonate(current_pos[0], current_pos[1])
+		return true
+	return false
 
-
+func trap_detonate(x, y):
+	await _ref_RemoveObject.remove(_new_GroupName.TRAP, x, y)
+	await _ref_RemoveObject.remove(_new_GroupName.DWARF, x, y)

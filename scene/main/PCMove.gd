@@ -3,7 +3,10 @@ extends Node2D
 const Schedule := preload("res://scene/main/Schedule.gd")
 const DungeonBoard := preload("res://scene/main/DungeonBoard.gd")
 const MainScene := preload("res://scene/main/MainScene.gd")
+const InitLevel := preload("res://scene/main/InitLevel.gd")
 const PC_ATTACK: String = "PCAttack"
+
+@onready var trap := preload("res://sprite/Trap.tscn") as PackedScene
 
 var _new_InputName := preload("res://library/InputName.gd").new()
 var _new_ConvertCoord := preload("res://library/ConvertCoord.gd").new()
@@ -12,9 +15,13 @@ var _new_GroupName := preload("res://library/GroupName.gd").new()
 var _ref_Schedule: Schedule
 var _ref_DungeonBoard: DungeonBoard
 var _ref_MainScene: MainScene
+var _ref_InitLevel: InitLevel
 var _pc: Sprite2D
 var _trigger_next_level: bool = false
 var _is_charge_primed: bool = false
+var _is_trap_primed: bool = false
+var _is_invisibility_primed: bool = false
+var _is_shuriken_primed: bool = false
 
 signal pc_moved(message)
 signal next_level()
@@ -39,11 +46,28 @@ func _on_Charge_skill_primed():
 func _on_Charge_skill_unprimed():
 	_is_charge_primed = false
 
+func _on_Trap_skill_primed():
+	_is_trap_primed = true
+
+func _on_Trap_skill_unprimed():
+	_is_trap_primed = false
+
+func _on_Invisibility_skill_primed():
+	_is_invisibility_primed = true
+
+func _on_Invisibility_skill_unprimed():
+	_is_invisibility_primed = false
+
+func _on_Shuriken_skill_primed():
+	_is_shuriken_primed = true
+
+func _on_Shuriken_skill_unprimed():
+	_is_shuriken_primed = false
+
 func _unhandled_input(event: InputEvent) -> void:
 	if _ref_MainScene._game_paused == true:
 		return
 
-	# print("pc: {0}".format([_pc]))
 	var source: Array = _new_ConvertCoord.vector_to_array(_pc.position)
 	var x: int = source[0]
 	var y: int = source[1]
@@ -67,12 +91,18 @@ func _unhandled_input(event: InputEvent) -> void:
 	else:
 		return
 
+	if _is_trap_primed:
+		lay_trap(x, y)
+
 	await _try_move(x, y, distance, dir)
 	await _after_move()
 	_trigger_end_turn()
 
 func _trigger_end_turn():
 	_is_charge_primed = false
+	_is_trap_primed = false
+	_is_shuriken_primed = false
+	_is_invisibility_primed = false
 	if _trigger_next_level:
 		_trigger_next_level = false
 		next_level.emit()
@@ -103,7 +133,6 @@ func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
 
 func _try_move(x: int, y: int, distance: int, dir: String) -> void:
 	var awaited
-	print(x, y)
 
 	if dir == _new_InputName.MOVE_LEFT:
 		for i in range(1, distance + 1):
@@ -145,11 +174,9 @@ func _after_move():
 	for a in range(x - slash_radius, x + slash_radius + 1):
 		for b in range(y - slash_radius, y + slash_radius + 1):
 			if _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, a, b):
-				print('attacking dwarf after move')
 				await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, a, b)
 
 func _try_singular_move(x: int, y: int):
-	print(x, y)
 	if not _ref_DungeonBoard.is_inside_dungeon(x, y):
 		pc_moved.emit("Cannot leave dungeon.")
 		return false
@@ -164,4 +191,7 @@ func _try_singular_move(x: int, y: int):
 		set_process_unhandled_input(false)
 		_ref_DungeonBoard.update_sprite_position(_pc, x, y)
 		return true
+
+func lay_trap(x, y):
+	_ref_InitLevel._create_sprite(trap, _new_GroupName.TRAP, x, y)
 

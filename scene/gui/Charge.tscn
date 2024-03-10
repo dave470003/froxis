@@ -14,7 +14,7 @@ atlas = ExtResource("1_87u1k")
 region = Rect2(0, 396, 24, 36)
 
 [node name="ChargeSkill" type="PanelContainer"]
-modulate = Color(0.184314, 0.545098, 0.196078, 1)
+modulate = Color(0.184314, 0.768627, 0.196078, 1)
 custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
 theme = ExtResource("1_143jv")
 theme_override_styles/panel = ExtResource("2_r073j")

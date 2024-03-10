@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://opglvlemqeg8"]
+[gd_scene load_steps=5 format=3 uid="uid://opglvlemqeg8"]
 
 [ext_resource type="PackedScene" uid="uid://yj0d500vgn2k" path="res://scene/gui/Skill.tscn" id="1_xnfpu"]
+[ext_resource type="Script" path="res://scene/gui/Invisibility.gd" id="2_mfq8i"]
 [ext_resource type="Texture2D" uid="uid://ctffxeo6roouo" path="res://resources/curses_vector_24x36.png" id="2_s40ie"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_15flk"]
@@ -8,6 +9,7 @@ atlas = ExtResource("2_s40ie")
 region = Rect2(0, 396, 24, 36)
 
 [node name="InvisibilitySkill" instance=ExtResource("1_xnfpu")]
+script = ExtResource("2_mfq8i")
 
 [node name="SkillName" parent="SkillMarginWrapper/VBoxContainer" index="0"]
 text = "Invisibility (i)"

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://63sghw7wvnps"]
+[gd_scene load_steps=5 format=3 uid="uid://63sghw7wvnps"]
 
 [ext_resource type="PackedScene" uid="uid://yj0d500vgn2k" path="res://scene/gui/Skill.tscn" id="1_gaomq"]
+[ext_resource type="Script" path="res://scene/gui/Shuriken.gd" id="2_opaqy"]
 [ext_resource type="Texture2D" uid="uid://ctffxeo6roouo" path="res://resources/curses_vector_24x36.png" id="2_swug5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_15flk"]
@@ -9,6 +10,7 @@ region = Rect2(0, 396, 24, 36)
 
 [node name="ShurikenSkill" instance=ExtResource("1_gaomq")]
 modulate = Color(1, 1, 0.258824, 1)
+script = ExtResource("2_opaqy")
 
 [node name="SkillName" parent="SkillMarginWrapper/VBoxContainer" index="0"]
 text = "Shuriken (s)"

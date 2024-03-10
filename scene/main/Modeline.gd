@@ -12,13 +12,11 @@ func _process(delta):
 	pass
 
 func _on_Schedule_turn_ended(current_sprite: Sprite2D) -> void:
-	print('turn ended')
 	if current_sprite.is_in_group(_new_GroupName.PC):
 		text = ""
 
 
 func _on_EnemyAI_enemy_warned(message: String) -> void:
-	print('enemy warned')
 	text = message
 
 

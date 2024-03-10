@@ -1,5 +1,5 @@
 extends "res://library/Skill.gd"
 
 func _ready():
-	_triggerChar = KEY_C
-	_cooldown = 2
+	_triggerChar = KEY_S
+	_cooldown = 4

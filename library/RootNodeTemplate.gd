@@ -7,7 +7,6 @@ func _set_signal(_signal_bind) -> void:
 		for i in range(3, len(s)):
 			var callable = Callable(get_node(s[i]), s[1])
 			get_node(s[2]).connect(s[0], callable)
-			print(s[2], s[0], s[i])
 
 
 func _set_node_ref(_node_ref) -> void:

@@ -27,10 +27,8 @@ func _on_InitLevel_sprite_created(new_sprite: Sprite2D) -> void:
 
 
 func end_turn() -> void:
-	print("{0}: End turn.".format([_get_current().name]))
 	turn_ended.emit(_get_current())
 	_goto_next()
-	print("{0}: Start turn.".format([_get_current().name]))
 	turn_started.emit(_get_current())
 
 

@@ -12,6 +12,9 @@ const SIDEBAR = "MainGUI/MainHBoxContainer/SidebarVBoxContainer"
 const MODELINE = "MainGUI/MainHBoxContainer/Modeline"
 const MAIN_SCENE = "."
 const CHARGE_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/ChargeSkill"
+const TRAP_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/TrapSkill"
+const INVISIBILITY_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/InvisibilitySkill"
+const SHURIKEN_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/ShurikenSkill"
 
 const SIGNAL_BIND: Array = [
 	[
@@ -32,7 +35,7 @@ const SIGNAL_BIND: Array = [
 	[
 		"turn_ended", "_on_Schedule_turn_ended",
 		SCHEDULE,
-		MODELINE, CHARGE_SKILL
+		MODELINE, CHARGE_SKILL, TRAP_SKILL, INVISIBILITY_SKILL, SHURIKEN_SKILL
 	],
 	[
 		"enemy_warned", "_on_EnemyAI_enemy_warned",
@@ -84,6 +87,36 @@ const SIGNAL_BIND: Array = [
 		CHARGE_SKILL,
 		PC_MOVE
 	],
+	[
+		"skill_primed", "_on_Trap_skill_primed",
+		TRAP_SKILL,
+		PC_MOVE
+	],
+	[
+		"skill_unprimed", "_on_Trap_skill_unprimed",
+		TRAP_SKILL,
+		PC_MOVE
+	],
+	[
+		"skill_primed", "_on_Invisibility_skill_primed",
+		INVISIBILITY_SKILL,
+		PC_MOVE
+	],
+	[
+		"skill_unprimed", "_on_Invisibility_skill_unprimed",
+		INVISIBILITY_SKILL,
+		PC_MOVE
+	],
+	[
+		"skill_primed", "_on_Shuriken_skill_primed",
+		SHURIKEN_SKILL,
+		PC_MOVE
+	],
+	[
+		"skill_unprimed", "_on_Shuriken_skill_unprimed",
+		SHURIKEN_SKILL,
+		PC_MOVE
+	],
 ]
 
 const NODE_REF: Array = [
@@ -100,12 +133,17 @@ const NODE_REF: Array = [
 	[
 		"_ref_RemoveObject",
 		REMOVE,
-		PC_ATTACK
+		PC_ATTACK, NPC
 	],
 	[
 		"_ref_MainScene",
 		MAIN_SCENE,
-		PC_MOVE, CHARGE_SKILL
+		PC_MOVE, CHARGE_SKILL, TRAP_SKILL, INVISIBILITY_SKILL, SHURIKEN_SKILL
+	],
+	[
+		"_ref_InitLevel",
+		INIT_LEVEL,
+		PC_MOVE,
 	],
 ]
 
