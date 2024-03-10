@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bk6dytwsq5jkx"]
+[gd_scene load_steps=13 format=3 uid="uid://bk6dytwsq5jkx"]
 
 [ext_resource type="Script" path="res://scene/main/InitWorld.gd" id="1_2yf6q"]
 [ext_resource type="Script" path="res://scene/main/MainScene.gd" id="1_x6a0h"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://scene/main/ReloadGame.gd" id="6_ceh1i"]
 [ext_resource type="Script" path="res://scene/main/DungeonBoard.gd" id="7_8pe1w"]
 [ext_resource type="Script" path="res://scene/main/RemoveObject.gd" id="9_trlfh"]
+[ext_resource type="PackedScene" uid="uid://bq4280bwkq1sf" path="res://sprite/Ladder.tscn" id="11_dg4fr"]
+[ext_resource type="PackedScene" uid="uid://bxggj3f5pmh7w" path="res://sprite/Shrine.tscn" id="12_i7qc2"]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_x6a0h")
@@ -43,3 +45,7 @@ script = ExtResource("7_8pe1w")
 
 [node name="RemoveObject" type="Node2D" parent="."]
 script = ExtResource("9_trlfh")
+
+[node name="Ladder" parent="." instance=ExtResource("11_dg4fr")]
+
+[node name="Shrine" parent="." instance=ExtResource("12_i7qc2")]

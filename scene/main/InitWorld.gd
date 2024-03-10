@@ -6,6 +6,8 @@ const DungeonBoard := preload("res://scene/main/DungeonBoard.gd")
 @onready var Dwarf := preload("res://sprite/Dwarf.tscn") as PackedScene
 @onready var Wall := preload("res://sprite/Wall.tscn") as PackedScene
 @onready var Floor := preload("res://sprite/Floor.tscn") as PackedScene
+@onready var Ladder := preload("res://sprite/Ladder.tscn") as PackedScene
+@onready var Shrine := preload("res://sprite/Shrine.tscn") as PackedScene
 
 var _rng := RandomNumberGenerator.new()
 var _ref_DungeonBoard: DungeonBoard
@@ -33,7 +35,13 @@ func _create_sprite(prefab: PackedScene, group: String, x: int, y: int,
 	sprite_created.emit(sprite)
 
 func _create_player():
-	_create_sprite(Player, _new_GroupName.PC, 1, 1)
+	_create_sprite(Player, _new_GroupName.PC, _new_DungeonSize.PLAYER_SPAWN_X, _new_DungeonSize.PLAYER_SPAWN_Y)
+
+func _create_ladder():
+	_create_sprite(Ladder, _new_GroupName.LADDER, _new_DungeonSize.LADDER_SPAWN_X, _new_DungeonSize.LADDER_SPAWN_Y)
+
+func _create_shrine():
+	_create_sprite(Shrine, _new_GroupName.SHRINE, _new_DungeonSize.SHRINE_SPAWN_X, _new_DungeonSize.SHRINE_SPAWN_Y)
 
 func _create_dwarves():
 	var dwarf: int = _rng.randi_range(3, 6)
@@ -73,6 +81,8 @@ func _unhandled_input(event):
 			_initialized = true
 			_create_walls_and_floor()
 			_create_player()
+			_create_shrine()
+			_create_ladder()
 			_create_dwarves()
 			_set_health()
 			set_process_unhandled_input(false)

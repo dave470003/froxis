@@ -36,6 +36,10 @@ func update_sprite_position(sprite: Sprite2D, x: int, y: int):
 		group = _new_GroupName.WALL
 	elif sprite.is_in_group(_new_GroupName.PC):
 		group = _new_GroupName.PC
+	elif sprite.is_in_group(_new_GroupName.LADDER):
+		group = _new_GroupName.LADDER
+	elif sprite.is_in_group(_new_GroupName.SHRINE):
+		group = _new_GroupName.SHRINE
 	else:
 		return
 
@@ -56,6 +60,10 @@ func _on_InitWorld_sprite_created(new_sprite: Sprite2D) -> void:
 		group = _new_GroupName.WALL
 	elif new_sprite.is_in_group(_new_GroupName.PC):
 		group = _new_GroupName.PC
+	elif new_sprite.is_in_group(_new_GroupName.LADDER):
+		group = _new_GroupName.LADDER
+	elif new_sprite.is_in_group(_new_GroupName.SHRINE):
+		group = _new_GroupName.SHRINE
 	else:
 		return
 
@@ -64,7 +72,7 @@ func _on_InitWorld_sprite_created(new_sprite: Sprite2D) -> void:
 
 
 func _init_dict() -> void:
-	var groups = [_new_GroupName.DWARF, _new_GroupName.WALL, _new_GroupName.PC]
+	var groups = [_new_GroupName.DWARF, _new_GroupName.WALL, _new_GroupName.PC, _new_GroupName.LADDER, _new_GroupName.SHRINE]
 
 	for g in groups:
 		_sprite_dict[g] = {}
