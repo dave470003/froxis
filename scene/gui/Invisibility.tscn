@@ -7,7 +7,7 @@
 atlas = ExtResource("2_s40ie")
 region = Rect2(0, 396, 24, 36)
 
-[node name="Skill" instance=ExtResource("1_xnfpu")]
+[node name="InvisibilitySkill" instance=ExtResource("1_xnfpu")]
 
 [node name="SkillName" parent="SkillMarginWrapper/VBoxContainer" index="0"]
 text = "Invisibility (i)"

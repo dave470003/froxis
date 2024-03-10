@@ -11,6 +11,7 @@ const NPC = "EnemyAI"
 const SIDEBAR = "MainGUI/MainHBoxContainer/SidebarVBoxContainer"
 const MODELINE = "MainGUI/MainHBoxContainer/Modeline"
 const MAIN_SCENE = "."
+const CHARGE_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/ChargeSkill"
 
 const SIGNAL_BIND: Array = [
 	[
@@ -31,7 +32,7 @@ const SIGNAL_BIND: Array = [
 	[
 		"turn_ended", "_on_Schedule_turn_ended",
 		SCHEDULE,
-		MODELINE
+		MODELINE, CHARGE_SKILL
 	],
 	[
 		"enemy_warned", "_on_EnemyAI_enemy_warned",
@@ -73,6 +74,16 @@ const SIGNAL_BIND: Array = [
 		SIDEBAR,
 		MAIN_SCENE
 	],
+	[
+		"skill_primed", "_on_Charge_skill_primed",
+		CHARGE_SKILL,
+		PC_MOVE
+	],
+	[
+		"skill_unprimed", "_on_Charge_skill_unprimed",
+		CHARGE_SKILL,
+		PC_MOVE
+	],
 ]
 
 const NODE_REF: Array = [
@@ -94,7 +105,7 @@ const NODE_REF: Array = [
 	[
 		"_ref_MainScene",
 		MAIN_SCENE,
-		PC_MOVE
+		PC_MOVE, CHARGE_SKILL
 	],
 ]
 

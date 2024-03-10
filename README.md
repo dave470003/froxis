@@ -17,4 +17,5 @@ s - shuriken (4 turn cooldown)
 i - invisibility (5 turn cooldown, unlockable)
 l - lay trap (4 turn cooldown, unlockable)
 t - teleport (consumable)
-
+d - dash (3 turn cooldown)
+j - jump (3 turn cooldown)

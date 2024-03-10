@@ -49,14 +49,14 @@ text = "Help"
 [node name="Skills" type="VBoxContainer" parent="MainHBoxContainer/SidebarVBoxContainer"]
 layout_mode = 2
 
-[node name="Skill2" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("6_twbyy")]
+[node name="TrapSkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("7_kx4lj")]
 layout_mode = 2
 
-[node name="Skill3" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("7_kx4lj")]
+[node name="InvisibilitySkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("9_dmsgr")]
 layout_mode = 2
 
-[node name="Skill4" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("8_hgq6a")]
+[node name="ChargeSkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("6_twbyy")]
 layout_mode = 2
 
-[node name="Skill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("9_dmsgr")]
+[node name="ShurikenSkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("8_hgq6a")]
 layout_mode = 2

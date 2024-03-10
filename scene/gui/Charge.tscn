@@ -1,14 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dm4gafsyfolca"]
+[gd_scene load_steps=7 format=3 uid="uid://dm4gafsyfolca"]
 
 [ext_resource type="Texture2D" uid="uid://ctffxeo6roouo" path="res://resources/curses_vector_24x36.png" id="1_87u1k"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pg1t6"]
-bg_color = Color(0.156863, 0.172549, 0.203922, 0)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(1, 1, 1, 1)
+[ext_resource type="Theme" uid="uid://6wwc8qstr4f2" path="res://scene/main/FiraTheme.tres" id="1_143jv"]
+[ext_resource type="StyleBox" uid="uid://d4di5sdd5pakq" path="res://scene/gui/ThinBorder.tres" id="2_r073j"]
+[ext_resource type="Script" path="res://scene/gui/Charge.gd" id="3_y1gla"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kvrpu"]
 atlas = ExtResource("1_87u1k")
@@ -18,10 +13,12 @@ region = Rect2(264, 468, 24, 36)
 atlas = ExtResource("1_87u1k")
 region = Rect2(0, 396, 24, 36)
 
-[node name="Skill" type="PanelContainer"]
+[node name="ChargeSkill" type="PanelContainer"]
 modulate = Color(0.184314, 0.545098, 0.196078, 1)
 custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
-theme_override_styles/panel = SubResource("StyleBoxFlat_pg1t6")
+theme = ExtResource("1_143jv")
+theme_override_styles/panel = ExtResource("2_r073j")
+script = ExtResource("3_y1gla")
 
 [node name="SkillMarginWrapper" type="MarginContainer" parent="."]
 layout_mode = 2
