@@ -24,9 +24,7 @@ script = ExtResource("2_44ckb")
 script = ExtResource("3_lk5jb")
 
 [node name="MainGUI" parent="." instance=ExtResource("2_qbref")]
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 820.0
+offset_right = 900.0
 offset_bottom = 620.0
 
 [node name="PCMove" type="Node2D" parent="."]

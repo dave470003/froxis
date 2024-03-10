@@ -126,6 +126,5 @@ func _on_SidebarVBoxContainer_game_over(message: String):
 	)
 
 func restart_game():
-	print('restart game')
 	get_node("InitGame").reset_game()
 	_game_paused = false
