@@ -175,6 +175,13 @@ func _after_move():
 		for b in range(y - slash_radius, y + slash_radius + 1):
 			if _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, a, b):
 				await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, a, b)
+				
+	if _is_shuriken_primed:
+		var enemy = _ref_DungeonBoard._get_closest_enemy(x, y)
+		if enemy is Sprite2D:
+			var enemyPos = _new_ConvertCoord.vector_to_array(enemy.position)
+			await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, enemyPos[0], enemyPos[1])
+			pc_moved.emit("Threw Shuriken")
 
 func _try_singular_move(x: int, y: int):
 	if not _ref_DungeonBoard.is_inside_dungeon(x, y):
