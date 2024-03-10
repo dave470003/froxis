@@ -15,7 +15,11 @@ func _ready():
 func _process(delta):
 	pass
 
-func _on_InitWorld_sprite_created(new_sprite: Sprite2D) -> void:
+func reset():
+	_actors = [null]
+	_pointer = 0
+
+func _on_InitLevel_sprite_created(new_sprite: Sprite2D) -> void:
 	if new_sprite.is_in_group(_new_GroupName.PC):
 		_actors[0] = new_sprite
 	elif new_sprite.is_in_group(_new_GroupName.DWARF):

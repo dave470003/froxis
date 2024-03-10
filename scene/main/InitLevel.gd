@@ -1,6 +1,7 @@
 extends Node2D
 
 const DungeonBoard := preload("res://scene/main/DungeonBoard.gd")
+const Schedule := preload("res://scene/main/Schedule.gd")
 
 @onready var Player := preload("res://sprite/PC.tscn") as PackedScene
 @onready var Dwarf := preload("res://sprite/Dwarf.tscn") as PackedScene
@@ -9,8 +10,10 @@ const DungeonBoard := preload("res://scene/main/DungeonBoard.gd")
 @onready var Ladder := preload("res://sprite/Ladder.tscn") as PackedScene
 @onready var Shrine := preload("res://sprite/Shrine.tscn") as PackedScene
 
+var _level: int
 var _rng := RandomNumberGenerator.new()
 var _ref_DungeonBoard: DungeonBoard
+var _ref_Schedule: Schedule
 var _new_GroupName := preload("res://library/GroupName.gd").new()
 var _new_ConvertCoord := preload("res://library/ConvertCoord.gd").new()
 var _new_DungeonSize := preload("res://library/DungeonSize.gd").new()
@@ -18,7 +21,7 @@ var _new_InputName := preload("res://library/InputName.gd").new()
 var _initialized: bool = false
 
 signal sprite_created(new_sprite)
-signal set_health(health)
+signal level_started(level_number)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -54,7 +57,7 @@ func _create_dwarves():
 
 		if _ref_DungeonBoard.has_sprite(_new_GroupName.WALL, x, y) \
 				or _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, x, y) \
-				or (x == 1 and y == 1):
+				or _ref_DungeonBoard.has_sprite(_new_GroupName.PC, x, y):
 			continue
 		_create_sprite(Dwarf, _new_GroupName.DWARF, x, y)
 		dwarf -= 1
@@ -68,21 +71,23 @@ func _create_walls_and_floor():
 			else:
 				_create_sprite(Floor, _new_GroupName.FLOOR, x, y)
 
-func _set_health():
-	set_health.emit(3)
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta) -> void:
 	pass
 
-func _unhandled_input(event):
-	if event.is_action_pressed(_new_InputName.INIT_WORLD):
-		if not _initialized:
-			_initialized = true
-			_create_walls_and_floor()
-			_create_player()
-			_create_shrine()
-			_create_ladder()
-			_create_dwarves()
-			_set_health()
-			set_process_unhandled_input(false)
+func start_level(level_number):
+	_level = level_number
+	for n in self.get_children():
+		self.remove_child(n)
+		n.queue_free()
+	_ref_DungeonBoard.reset()
+	_ref_Schedule.reset()
+	_create_walls_and_floor()
+	_create_player()
+	_create_shrine()
+	_create_ladder()
+	_create_dwarves()
+	level_started.emit(_level)
+
+func next_level():
+	start_level(_level + 1)

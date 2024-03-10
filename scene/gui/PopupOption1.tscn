@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dya7jdklr68ej"]
+
+[ext_resource type="Script" path="res://scene/gui/PopupOption1.gd" id="1_tdgga"]
+
+[node name="PopupOption1" type="Label"]
+script = ExtResource("1_tdgga")

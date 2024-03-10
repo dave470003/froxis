@@ -2,6 +2,7 @@ extends Node2D
 
 const Schedule := preload("res://scene/main/Schedule.gd")
 const DungeonBoard := preload("res://scene/main/DungeonBoard.gd")
+const MainScene := preload("res://scene/main/MainScene.gd")
 const PC_ATTACK: String = "PCAttack"
 
 var _new_InputName := preload("res://library/InputName.gd").new()
@@ -10,9 +11,12 @@ var _new_GroupName := preload("res://library/GroupName.gd").new()
 
 var _ref_Schedule: Schedule
 var _ref_DungeonBoard: DungeonBoard
+var _ref_MainScene: MainScene
 var _pc: Sprite2D
+var _trigger_next_level: bool = false
 
 signal pc_moved(message)
+signal next_level()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,12 +27,15 @@ func _ready():
 func _process(delta):
 	pass
 
-func _on_InitWorld_sprite_created(sprite: Sprite2D):
+func _on_InitLevel_sprite_created(sprite: Sprite2D):
 	if sprite.is_in_group(_new_GroupName.PC):
 		_pc = sprite
 		set_process_unhandled_input(true)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _ref_MainScene._game_paused == true:
+		return
+
 	# print("pc: {0}".format([_pc]))
 	var source: Array = _new_ConvertCoord.vector_to_array(_pc.position)
 	var x: int = source[0]
@@ -49,7 +56,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	await _try_move(x,y)
-	_ref_Schedule.end_turn()
+	_trigger_end_turn()
+
+func _trigger_end_turn():
+	if _trigger_next_level:
+		_trigger_next_level = false
+		next_level.emit()
+	else:
+		_ref_Schedule.end_turn()
 
 func _is_move_input(event):
 	if (event.is_action_pressed(_new_InputName.MOVE_LEFT)
@@ -78,6 +92,8 @@ func _try_move(x: int, y: int) -> void:
 		pc_moved.emit("Cannot leave dungeon.")
 	elif _ref_DungeonBoard.has_sprite(_new_GroupName.WALL, x, y):
 		pc_moved.emit("Cannot pass wall.")
+	elif _ref_DungeonBoard.has_sprite(_new_GroupName.LADDER, x, y):
+		_trigger_next_level = true
 	elif _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, x, y):
 		set_process_unhandled_input(false)
 		await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, x, y)

@@ -26,6 +26,9 @@ func get_sprite(group_name: String, x: int, y: int) -> Sprite2D:
 		return null
 	return _sprite_dict[group_name][x][y]
 
+func reset():
+	_init_dict()
+
 func update_sprite_position(sprite: Sprite2D, x: int, y: int):
 	var oldPos: Array
 	var group: String
@@ -50,7 +53,7 @@ func update_sprite_position(sprite: Sprite2D, x: int, y: int):
 	_sprite_dict[group][x][y] = sprite
 
 
-func _on_InitWorld_sprite_created(new_sprite: Sprite2D) -> void:
+func _on_InitLevel_sprite_created(new_sprite: Sprite2D) -> void:
 	var pos: Array
 	var group: String
 

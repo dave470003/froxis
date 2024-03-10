@@ -29,6 +29,9 @@ custom_minimum_size = Vector2(180, 2.08165e-12)
 layout_mode = 2
 script = ExtResource("3_y2vix")
 
+[node name="Level" type="Label" parent="MainHBoxContainer/SidebarVBoxContainer"]
+layout_mode = 2
+
 [node name="Health" type="HBoxContainer" parent="MainHBoxContainer/SidebarVBoxContainer"]
 custom_minimum_size = Vector2(180, 2.08165e-12)
 layout_mode = 2

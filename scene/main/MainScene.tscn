@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bk6dytwsq5jkx"]
+[gd_scene load_steps=14 format=3 uid="uid://bk6dytwsq5jkx"]
 
-[ext_resource type="Script" path="res://scene/main/InitWorld.gd" id="1_2yf6q"]
 [ext_resource type="Script" path="res://scene/main/MainScene.gd" id="1_x6a0h"]
+[ext_resource type="Script" path="res://scene/main/InitGame.gd" id="2_44ckb"]
 [ext_resource type="PackedScene" uid="uid://dpl6chwdfk2qh" path="res://scene/main/MainGUI.tscn" id="2_qbref"]
+[ext_resource type="Script" path="res://scene/main/InitLevel.gd" id="3_lk5jb"]
 [ext_resource type="Script" path="res://scene/main/PCMove.gd" id="3_s2owl"]
 [ext_resource type="Script" path="res://scene/main/Schedule.gd" id="4_1ec4g"]
 [ext_resource type="Script" path="res://scene/main/EnemyAI.gd" id="5_8vwha"]
@@ -16,8 +17,11 @@
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_x6a0h")
 
-[node name="InitWorld" type="Node2D" parent="."]
-script = ExtResource("1_2yf6q")
+[node name="InitGame" type="Node2D" parent="."]
+script = ExtResource("2_44ckb")
+
+[node name="InitLevel" type="Node2D" parent="InitGame"]
+script = ExtResource("3_lk5jb")
 
 [node name="MainGUI" parent="." instance=ExtResource("2_qbref")]
 offset_left = 20.0
