@@ -48,7 +48,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	else:
 		return
 
-	_try_move(x,y)
+	await _try_move(x,y)
+	_ref_Schedule.end_turn()
 
 func _is_move_input(event):
 	if (event.is_action_pressed(_new_InputName.MOVE_LEFT)
@@ -79,13 +80,14 @@ func _try_move(x: int, y: int) -> void:
 		pc_moved.emit("Cannot pass wall.")
 	elif _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, x, y):
 		set_process_unhandled_input(false)
-		get_node(PC_ATTACK).attack(_new_GroupName.DWARF, x, y)
+		await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, x, y)
 	else:
 		set_process_unhandled_input(false)
-		_pc.position = _new_ConvertCoord.index_to_vector(x, y)
+		_ref_DungeonBoard.update_sprite_position(_pc, x, y)
 		# after moving PC tries to attack dwarves in range
 		for a in range(x-1, x+2):
 			for b in range(y-1, y+2):
 				if _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, a, b):
-					get_node(PC_ATTACK).attack(_new_GroupName.DWARF, a, b)
-		_ref_Schedule.end_turn()
+					print('attacking dwarf after move')
+					await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, a, b)
+

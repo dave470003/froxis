@@ -34,12 +34,14 @@ func update_sprite_position(sprite: Sprite2D, x: int, y: int):
 		group = _new_GroupName.DWARF
 	elif sprite.is_in_group(_new_GroupName.WALL):
 		group = _new_GroupName.WALL
+	elif sprite.is_in_group(_new_GroupName.PC):
+		group = _new_GroupName.PC
 	else:
 		return
 
 	oldPos = _new_ConvertCoord.vector_to_array(sprite.position)
 	_sprite_dict[group][oldPos[0]][oldPos[1]] = null
-	
+
 	sprite.position = _new_ConvertCoord.index_to_vector(x, y)
 	_sprite_dict[group][x][y] = sprite
 
@@ -52,6 +54,8 @@ func _on_InitWorld_sprite_created(new_sprite: Sprite2D) -> void:
 		group = _new_GroupName.DWARF
 	elif new_sprite.is_in_group(_new_GroupName.WALL):
 		group = _new_GroupName.WALL
+	elif new_sprite.is_in_group(_new_GroupName.PC):
+		group = _new_GroupName.PC
 	else:
 		return
 
@@ -60,7 +64,7 @@ func _on_InitWorld_sprite_created(new_sprite: Sprite2D) -> void:
 
 
 func _init_dict() -> void:
-	var groups = [_new_GroupName.DWARF, _new_GroupName.WALL]
+	var groups = [_new_GroupName.DWARF, _new_GroupName.WALL, _new_GroupName.PC]
 
 	for g in groups:
 		_sprite_dict[g] = {}

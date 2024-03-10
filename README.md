@@ -9,3 +9,12 @@ Regular swordsman who has the same abilities as the player at the start.
 Archer who can fire arrows across a large distance.
 Mage who can cast spells at both long and short range.
 Bombers who throw bombs.
+
+abilities the guy has:
+w - wait (no cooldown)
+c - charge-stomp (2 turn cooldown)
+s - shuriken (4 turn cooldown)
+i - invisibility (5 turn cooldown, unlockable)
+l - lay trap (4 turn cooldown, unlockable)
+t - teleport (consumable)
+

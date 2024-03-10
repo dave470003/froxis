@@ -7,6 +7,7 @@ var _ref_Schedule: Schedule
 var _ref_DungeonBoard: DungeonBoard
 var _new_GroupName := preload("res://library/GroupName.gd").new()
 var _new_ConvertCoord := preload("res://library/ConvertCoord.gd").new()
+var _new_Colours := preload("res://library/Colours.gd").new()
 
 signal enemy_warned
 signal enemy_attack
@@ -28,6 +29,7 @@ func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
 	move_to_pc(_pc, current_sprite)
 
 	if _pc_is_close(_pc, current_sprite):
+		await _animate_enemy_attack(_pc, current_sprite)
 		enemy_attack.emit(1)
 	_ref_Schedule.end_turn()
 
@@ -62,10 +64,18 @@ func try_to_move(current_sprite, x, y):
 		return false
 	elif _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, x, y):
 		return false
+	elif _ref_DungeonBoard.has_sprite(_new_GroupName.PC, x, y):
+		return false
 	return true
 
 func update_position(sprite: Sprite2D, x, y):
 	_ref_DungeonBoard.update_sprite_position(sprite, x, y)
+
+func _animate_enemy_attack(pc: Sprite2D, enemy: Sprite2D):
+	var tween = pc.create_tween()
+	tween.tween_property(pc, "modulate", Color.RED, 0.2)
+	tween.tween_property(pc, "modulate", Color(_new_Colours.LIGHT_GREY), 0.2)
+	await tween.finished
 
 
 
