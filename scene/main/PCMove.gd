@@ -25,6 +25,7 @@ var _is_shuriken_primed: bool = false
 
 signal pc_moved(message)
 signal next_level()
+signal turn_invisible(turns: int)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -94,6 +95,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _is_trap_primed:
 		lay_trap(x, y)
 
+	if _is_invisibility_primed:
+		_pc.turn_invisible(3)
+
 	await _try_move(x, y, distance, dir)
 	await _after_move()
 	_trigger_end_turn()
@@ -125,6 +129,8 @@ func _is_reload_input(event):
 	return false
 
 func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
+	# this is hacky. please connect this to signals properly
+	_pc._on_Schedule_turn_started(current_sprite)
 	if current_sprite.is_in_group(_new_GroupName.PC):
 		set_process_unhandled_input(true)
 	else:
@@ -175,7 +181,7 @@ func _after_move():
 		for b in range(y - slash_radius, y + slash_radius + 1):
 			if _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, a, b):
 				await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, a, b)
-				
+
 	if _is_shuriken_primed:
 		var enemy = _ref_DungeonBoard._get_closest_enemy(x, y)
 		if enemy is Sprite2D:

@@ -2,6 +2,7 @@ extends "res://library/RootNodeTemplate.gd"
 
 const INIT_GAME = "InitGame"
 const INIT_LEVEL = "InitGame/InitLevel"
+const PC = "InitGame/InitLevel/PC"
 const PC_MOVE = "PCMove"
 const PC_ATTACK = "PCMove/PCAttack"
 const SCHEDULE = "Schedule"
@@ -30,7 +31,7 @@ const SIGNAL_BIND: Array = [
 	[
 		"turn_started", "_on_Schedule_turn_started",
 		SCHEDULE,
-		PC_MOVE, NPC, SIDEBAR
+		PC_MOVE, NPC, SIDEBAR, PC
 	],
 	[
 		"turn_ended", "_on_Schedule_turn_ended",
@@ -116,6 +117,11 @@ const SIGNAL_BIND: Array = [
 		"skill_unprimed", "_on_Shuriken_skill_unprimed",
 		SHURIKEN_SKILL,
 		PC_MOVE
+	],
+	[
+		"turn_invisible", "_on_PCMove_turn_invisible",
+		PC_MOVE,
+		PC
 	],
 ]
 

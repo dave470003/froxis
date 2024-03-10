@@ -28,12 +28,13 @@ func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
 
 	var _pc = _ref_Schedule._actors[0]
 
-	move_to_pc(_pc, current_sprite)
-	if !check_for_traps(current_sprite):
-		if _pc_is_close(_pc, current_sprite):
-			await _animate_enemy_attack(_pc, current_sprite)
-			enemy_attack.emit(1)
-			
+	if !_pc._is_invisible:
+		move_to_pc(_pc, current_sprite)
+		if !check_for_traps(current_sprite):
+			if _pc_is_close(_pc, current_sprite):
+				await _animate_enemy_attack(_pc, current_sprite)
+				enemy_attack.emit(1)
+
 	_ref_Schedule.end_turn()
 
 func _pc_is_close(source: Sprite2D, target: Sprite2D) -> bool:
