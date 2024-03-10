@@ -26,6 +26,7 @@ var _is_shuriken_primed: bool = false
 signal pc_moved(message)
 signal next_level()
 signal turn_invisible(turns: int)
+signal visit_shrine()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -188,6 +189,9 @@ func _after_move():
 			var enemyPos = _new_ConvertCoord.vector_to_array(enemy.position)
 			await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, enemyPos[0], enemyPos[1])
 			pc_moved.emit("Threw Shuriken")
+
+	if _ref_DungeonBoard.has_sprite(_new_GroupName.SHRINE, x, y):
+		visit_shrine.emit()
 
 func _try_singular_move(x: int, y: int):
 	if not _ref_DungeonBoard.is_inside_dungeon(x, y):

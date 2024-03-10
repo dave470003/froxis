@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bk6dytwsq5jkx"]
+[gd_scene load_steps=16 format=3 uid="uid://bk6dytwsq5jkx"]
 
 [ext_resource type="Script" path="res://scene/main/MainScene.gd" id="1_x6a0h"]
 [ext_resource type="Script" path="res://scene/main/InitGame.gd" id="2_44ckb"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://bq4280bwkq1sf" path="res://sprite/Ladder.tscn" id="11_dg4fr"]
 [ext_resource type="PackedScene" uid="uid://bxggj3f5pmh7w" path="res://sprite/Shrine.tscn" id="12_i7qc2"]
 [ext_resource type="PackedScene" uid="uid://8lrriilsvf05" path="res://sprite/Trap.tscn" id="14_f13va"]
+[ext_resource type="Script" path="res://scene/main/Shop.gd" id="15_v00bv"]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_x6a0h")
@@ -54,3 +55,6 @@ script = ExtResource("9_trlfh")
 [node name="Shrine" parent="." instance=ExtResource("12_i7qc2")]
 
 [node name="Trap" parent="." instance=ExtResource("14_f13va")]
+
+[node name="Shop" type="Node2D" parent="."]
+script = ExtResource("15_v00bv")

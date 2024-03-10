@@ -123,6 +123,11 @@ const SIGNAL_BIND: Array = [
 		PC_MOVE,
 		PC
 	],
+	[
+		"visit_shrine", "_on_PCMove_visit_shrine",
+		PC_MOVE,
+		MAIN_SCENE
+	],
 ]
 
 const NODE_REF: Array = [
@@ -183,3 +188,27 @@ func _on_SidebarVBoxContainer_game_over(message: String):
 func restart_game():
 	get_node("InitGame").reset_game()
 	_game_paused = false
+
+func _on_PCMove_visit_shrine():
+	_game_paused = true
+	var popup_node = popup.instantiate()
+	var gui_node = get_node("MainGUI")
+	gui_node.add_child(popup_node)
+	popup_node.setup(
+		"You come across a mysterious shrine.
+		It grants you one of the following boons:
+		1: The Invisibility Skill
+		2: Gain 1 Health",
+		[
+			[
+				KEY_1,
+				"1: Option 1",
+				Callable(self, "restart_game")
+			],
+			[
+				KEY_2,
+				"2: Option 2",
+				Callable(self, "restart_game")
+			]
+		]
+	)

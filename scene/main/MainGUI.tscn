@@ -47,16 +47,20 @@ layout_mode = 2
 text = "Help"
 
 [node name="Skills" type="VBoxContainer" parent="MainHBoxContainer/SidebarVBoxContainer"]
+custom_minimum_size = Vector2(250, 2.08165e-12)
 layout_mode = 2
 
 [node name="TrapSkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("7_kx4lj")]
+visible = false
 layout_mode = 2
 
 [node name="InvisibilitySkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("9_dmsgr")]
+visible = false
 layout_mode = 2
 
 [node name="ChargeSkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("6_twbyy")]
 layout_mode = 2
 
 [node name="ShurikenSkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("8_hgq6a")]
+visible = false
 layout_mode = 2

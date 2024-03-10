@@ -1,4 +1,4 @@
-extends Label
+extends PanelContainer
 
 var _triggerKeycode: int
 var _callback: Callable

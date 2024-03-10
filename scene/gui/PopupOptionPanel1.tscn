@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5owyxddagoaq"]
+
+[ext_resource type="Script" path="res://scene/gui/PopupOption1.gd" id="1_iu6ig"]
+[ext_resource type="PackedScene" uid="uid://dya7jdklr68ej" path="res://scene/gui/PopupOption1.tscn" id="1_jwh5o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o7dk1"]
+bg_color = Color(0.156863, 0.172549, 0.203922, 1)
+
+[node name="PopupOptionPanel1" type="PanelContainer"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_o7dk1")
+script = ExtResource("1_iu6ig")
+
+[node name="PopupOptionMargin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="PopupOption" parent="PopupOptionMargin" instance=ExtResource("1_jwh5o")]
+layout_mode = 2
+text = "1: Do this"

@@ -5,6 +5,8 @@ const MainScene := preload("res://scene/main/MainScene.gd")
 var _triggerChar: int
 var _cooldown: int
 var _cooldown_remaining: int = 0
+var _is_skill_unlocked: bool = false
+var _is_skill_unlocked_at_start: bool = false
 var _is_skill_primed: bool = false
 var _ref_MainScene: MainScene
 var _new_GroupName := preload("res://library/GroupName.gd").new()
@@ -21,7 +23,12 @@ signal skill_unprimed(skill_name: String)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	_is_skill_unlocked = _is_skill_unlocked_at_start
+
+func reset():
+	_cooldown_remaining = 0
+	_is_skill_unlocked = _is_skill_unlocked_at_start
+	_is_skill_primed = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -31,12 +38,19 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _ref_MainScene._game_paused == true:
 		return
 
+	if !_is_skill_unlocked:
+		return
+
 	if event is InputEventKey and event.keycode == _triggerChar and event.is_pressed() and !event.is_echo():
 		if _cooldown_remaining == 0:
 			if _is_skill_primed:
 				_unprime_skill()
 			else:
 				_prime_skill()
+
+func unlock():
+	_is_skill_unlocked = true
+	visible = true
 
 func _prime_skill():
 	_is_skill_primed = true
@@ -51,6 +65,9 @@ func _unprime_skill():
 	add_theme_stylebox_override('panel', thin_border)
 
 func _on_Schedule_turn_ended(current_sprite: Sprite2D) -> void:
+	if !_is_skill_unlocked:
+		return
+
 	if current_sprite.is_in_group(_new_GroupName.PC):
 		print('turn ended trigger')
 		if _is_skill_primed:
