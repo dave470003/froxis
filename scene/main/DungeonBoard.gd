@@ -33,55 +33,101 @@ func reset():
 
 func update_sprite_position(sprite: Sprite2D, x: int, y: int):
 	var oldPos: Array
-	var group: String
+	var groups: Array
 
-	if sprite.is_in_group(_new_GroupName.DWARF):
-		group = _new_GroupName.DWARF
+	if sprite.is_in_group(_new_GroupName.ENEMY):
+		groups.append(_new_GroupName.ENEMY)
 	elif sprite.is_in_group(_new_GroupName.WALL):
-		group = _new_GroupName.WALL
+		groups.append(_new_GroupName.WALL)
 	elif sprite.is_in_group(_new_GroupName.PC):
-		group = _new_GroupName.PC
+		groups.append(_new_GroupName.PC)
 	elif sprite.is_in_group(_new_GroupName.LADDER):
-		group = _new_GroupName.LADDER
+		groups.append(_new_GroupName.LADDER)
 	elif sprite.is_in_group(_new_GroupName.SHRINE):
-		group = _new_GroupName.SHRINE
+		groups.append(_new_GroupName.SHRINE)
 	elif sprite.is_in_group(_new_GroupName.TRAP):
-		group = _new_GroupName.TRAP
+		groups.append(_new_GroupName.TRAP)
+	elif sprite.is_in_group(_new_GroupName.DWARF):
+		groups.append(_new_GroupName.DWARF)
+	elif sprite.is_in_group(_new_GroupName.ELF):
+		groups.append(_new_GroupName.ELF)
+	elif sprite.is_in_group(_new_GroupName.TROLL):
+		groups.append(_new_GroupName.TROLL)
+	elif sprite.is_in_group(_new_GroupName.DEMON):
+		groups.append(_new_GroupName.DEMON)
+	elif sprite.is_in_group(_new_GroupName.HARPY):
+		groups.append(_new_GroupName.HARPY)
+	elif sprite.is_in_group(_new_GroupName.FLYING):
+		groups.append(_new_GroupName.FLYING)
+	elif sprite.is_in_group(_new_GroupName.GROUND):
+		groups.append(_new_GroupName.GROUND)
 	else:
 		return
 
-	oldPos = _new_ConvertCoord.vector_to_array(sprite.position)
-	_sprite_dict[group][oldPos[0]][oldPos[1]] = null
+	for i in range(0, groups.size()):
+		var group = groups[i]
+		oldPos = _new_ConvertCoord.vector_to_array(sprite.position)
+		_sprite_dict[group][oldPos[0]][oldPos[1]] = null
 
-	sprite.position = _new_ConvertCoord.index_to_vector(x, y)
-	_sprite_dict[group][x][y] = sprite
+		sprite.position = _new_ConvertCoord.index_to_vector(x, y)
+		_sprite_dict[group][x][y] = sprite
 
 
 func _on_InitLevel_sprite_created(new_sprite: Sprite2D) -> void:
 	var pos: Array
-	var group: String
+	var groups: Array = []
 
-	if new_sprite.is_in_group(_new_GroupName.DWARF):
-		group = _new_GroupName.DWARF
+	if new_sprite.is_in_group(_new_GroupName.ENEMY):
+		groups.append(_new_GroupName.ENEMY)
 	elif new_sprite.is_in_group(_new_GroupName.WALL):
-		group = _new_GroupName.WALL
+		groups.append(_new_GroupName.WALL)
 	elif new_sprite.is_in_group(_new_GroupName.PC):
-		group = _new_GroupName.PC
+		groups.append(_new_GroupName.PC)
 	elif new_sprite.is_in_group(_new_GroupName.LADDER):
-		group = _new_GroupName.LADDER
+		groups.append(_new_GroupName.LADDER)
 	elif new_sprite.is_in_group(_new_GroupName.SHRINE):
-		group = _new_GroupName.SHRINE
+		groups.append(_new_GroupName.SHRINE)
 	elif new_sprite.is_in_group(_new_GroupName.TRAP):
-		group = _new_GroupName.TRAP
+		groups.append(_new_GroupName.TRAP)
+	elif new_sprite.is_in_group(_new_GroupName.DWARF):
+		groups.append(_new_GroupName.DWARF)
+	elif new_sprite.is_in_group(_new_GroupName.ELF):
+		groups.append(_new_GroupName.ELF)
+	elif new_sprite.is_in_group(_new_GroupName.TROLL):
+		groups.append(_new_GroupName.TROLL)
+	elif new_sprite.is_in_group(_new_GroupName.DEMON):
+		groups.append(_new_GroupName.DEMON)
+	elif new_sprite.is_in_group(_new_GroupName.HARPY):
+		groups.append(_new_GroupName.HARPY)
+	elif new_sprite.is_in_group(_new_GroupName.FLYING):
+		groups.append(_new_GroupName.FLYING)
+	elif new_sprite.is_in_group(_new_GroupName.GROUND):
+		groups.append(_new_GroupName.GROUND)
 	else:
 		return
 
-	pos = _new_ConvertCoord.vector_to_array(new_sprite.position)
-	_sprite_dict[group][pos[0]][pos[1]] = new_sprite
+	for i in range(0, groups.size()):
+		var group = groups[i]
+		pos = _new_ConvertCoord.vector_to_array(new_sprite.position)
+		_sprite_dict[group][pos[0]][pos[1]] = new_sprite
 
 
 func _init_dict() -> void:
-	var groups = [_new_GroupName.DWARF, _new_GroupName.WALL, _new_GroupName.PC, _new_GroupName.LADDER, _new_GroupName.SHRINE, _new_GroupName.TRAP]
+	var groups = [
+		_new_GroupName.DWARF,
+		_new_GroupName.ENEMY,
+		_new_GroupName.ELF,
+		_new_GroupName.HARPY,
+		_new_GroupName.TROLL,
+		_new_GroupName.DEMON,
+		_new_GroupName.FLYING,
+		_new_GroupName.GROUND,
+		_new_GroupName.WALL,
+		_new_GroupName.PC,
+		_new_GroupName.LADDER,
+		_new_GroupName.SHRINE,
+		_new_GroupName.TRAP
+	]
 
 	for g in groups:
 		_sprite_dict[g] = {}
@@ -98,9 +144,9 @@ func _get_closest_enemy_in_range(x, y, range):
 	var dist = range;
 	for i in range(0, _new_DungeonSize.MAX_X):
 		for j in range(0, _new_DungeonSize.MAX_Y):
-			if _sprite_dict[_new_GroupName.DWARF][i][j] is Sprite2D:
+			if _sprite_dict[_new_GroupName.ENEMY][i][j] is Sprite2D:
 				if (abs(i - x) + abs(j - y)) <= dist:
-					enemy = _sprite_dict[_new_GroupName.DWARF][i][j]
+					enemy = _sprite_dict[_new_GroupName.ENEMY][i][j]
 					dist = abs(i - x) + abs(j - y)
 	return enemy
 
@@ -110,7 +156,7 @@ func get_teleport_destination():
 	while true:
 		x = _rng.randi_range(1, _new_DungeonSize.MAX_X - 1)
 		y = _rng.randi_range(1, _new_DungeonSize.MAX_Y - 1)
-		if has_sprite(_new_GroupName.DWARF, x, y) || has_sprite(_new_GroupName.WALL, x, y):
+		if has_sprite(_new_GroupName.ENEMY, x, y) || has_sprite(_new_GroupName.WALL, x, y):
 			continue
 		break
 	return _new_ConvertCoord.index_to_vector(x, y)

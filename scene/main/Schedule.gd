@@ -22,7 +22,7 @@ func reset():
 func _on_InitLevel_sprite_created(new_sprite: Sprite2D) -> void:
 	if new_sprite.is_in_group(_new_GroupName.PC):
 		_actors[0] = new_sprite
-	elif new_sprite.is_in_group(_new_GroupName.DWARF):
+	elif new_sprite.is_in_group(_new_GroupName.ENEMY):
 		_actors.append(new_sprite)
 
 func end_turn() -> void:

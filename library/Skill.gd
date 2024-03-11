@@ -11,6 +11,7 @@ var _is_skill_unlocked_at_start: bool = false
 var _is_skill_primed: bool = false
 var _ref_MainScene: MainScene
 var _new_GroupName := preload("res://library/GroupName.gd").new()
+var _do_not_reset_cooldown_this_turn: bool = false
 
 @onready var thin_border := preload("res://scene/gui/ThinBorder.tres")
 @onready var thick_border := preload("res://scene/gui/ThickBorder.tres")
@@ -34,6 +35,10 @@ func reset():
 	_cooldown_remaining = 0
 	_cooldown = _initial_cooldown
 	_is_skill_unlocked = _is_skill_unlocked_at_start
+	if !_is_skill_unlocked:
+		visible = false
+	else:
+		visible = true
 	_is_skill_primed = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -75,7 +80,9 @@ func _on_Schedule_turn_ended(current_sprite: Sprite2D) -> void:
 		return
 
 	if current_sprite.is_in_group(_new_GroupName.PC):
-		print('turn ended trigger')
+		if _do_not_reset_cooldown_this_turn:
+			_do_not_reset_cooldown_this_turn = false
+			return
 		if _is_skill_primed:
 			_unprime_skill()
 			_cooldown_remaining = _cooldown
@@ -120,5 +127,3 @@ func reduce_cooldown():
 	_cooldown = _cooldown - 1
 	if _cooldown_remaining > 0:
 		_cooldown_remaining = _cooldown_remaining - 1
-
-

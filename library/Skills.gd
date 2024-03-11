@@ -35,174 +35,203 @@ const SKILL_DICT = {
 		"id": 1,
 		"key": SKILL_UPGRADE_HEALTH,
 		"description": "Add one health.",
-		"dependency": null
+		"dependency": null,
+		"implemented": true,
 	},
 	SKILL_GET_AMULET: {
 		"id": 3,
 		"key": SKILL_GET_AMULET,
 		"description": "Obtain an amulet of charisma",
-		"dependency": null
+		"dependency": null,
+		"implemented": true,
 	},
 	SKILL_INVISIBILITY_1: {
 		"id": 4,
 		"key": SKILL_INVISIBILITY_1,
 		"description": "Learn the Invisibility skill",
-		"dependency": null
+		"dependency": null,
+		"implemented": true,
 	},
 	SKILL_INVISIBILITY_2: {
 		"id": 5,
 		"key": SKILL_INVISIBILITY_2,
 		"description": "Invisibility lasts for an extra turn",
-		"dependency": 4
+		"dependency": 4,
+		"implemented": true,
 	},
 	SKILL_INVISIBILITY_3: {
 		"id": 6,
 		"key": SKILL_INVISIBILITY_3,
 		"description": "Invisibility has a reduced cooldown",
-		"dependency": 5
+		"dependency": 5,
+		"implemented": true,
 	},
 	SKILL_INVISIBILITY_4: {
 		"id": 7,
 		"key": SKILL_INVISIBILITY_4,
 		"description": "Invisibility is not removed when attacking",
-		"dependency": 6
+		"dependency": 6,
+		"implemented": true,
 	},
 	SKILL_INVISIBILITY_5: {
 		"id": 8,
 		"key": SKILL_INVISIBILITY_5,
-		"description": "Invisibility adds invulnerability",
-		"dependency": 7
+		"description": "Invisibility increases move speed",
+		"dependency": 7,
+		"implemented": true,
 	},
 	SKILL_CHARGE_1: {
 		"id": 9,
 		"key": SKILL_CHARGE_1,
 		"description": "After charging, stomp to damage enemies in an area",
-		"dependency": null
+		"dependency": null,
+		"implemented": true,
 	},
 	SKILL_CHARGE_2: {
 		"id": 10,
 		"key": SKILL_CHARGE_2,
 		"description": "Charge cooldown is reduced",
-		"dependency": 9
+		"dependency": 9,
+		"implemented": true,
 	},
 	SKILL_CHARGE_3: {
 		"id": 11,
 		"key": SKILL_CHARGE_3,
 		"description": "Charge has added range",
-		"dependency": 10
+		"dependency": 10,
+		"implemented": true,
 	},
 	SKILL_CHARGE_4: {
 		"id": 12,
 		"key": SKILL_CHARGE_4,
 		"description": "Charge's stomp has added range",
-		"dependency": 11
+		"dependency": 11,
+		"implemented": true,
 	},
 	SKILL_TRAP_1: {
 		"id": 13,
 		"key": SKILL_TRAP_1,
 		"description": "Learn the Trap skill",
-		"dependency": null
+		"dependency": null,
+		"implemented": true,
 	},
 	SKILL_TRAP_2: {
 		"id": 14,
 		"key": SKILL_TRAP_2,
 		"description": "Trap has a reduced cooldown",
-		"dependency": 13
+		"dependency": 13,
+		"implemented": true,
 	},
 	SKILL_TRAP_3: {
 		"id": 15,
 		"key": SKILL_TRAP_3,
 		"description": "Trap now detonates in an area",
-		"dependency": 14
+		"dependency": 14,
+		"implemented": true,
 	},
 	SKILL_TRAP_4: {
 		"id": 16,
 		"key": SKILL_TRAP_4,
 		"description": "Trap now affects flying enemies",
-		"dependency": 15
+		"dependency": 15,
+		"implemented": true,
 	},
 	SKILL_TRAP_5: {
 		"id": 17,
 		"key": SKILL_TRAP_5,
 		"description": "Trap now stuns all enemies upon entering or detonating",
-		"dependency": 16
+		"dependency": 16,
+		"implemented": true,
 	},
 	SKILL_SHURIKEN_1: {
 		"id": 18,
 		"key": SKILL_SHURIKEN_1,
 		"description": "Learn the Shuriken skill",
-		"dependency": null
+		"dependency": null,
+		"implemented": true,
 	},
 	SKILL_SHURIKEN_2: {
 		"id": 19,
 		"key": SKILL_SHURIKEN_2,
 		"description": "Increase the range of Shuriken",
-		"dependency": 18
+		"dependency": 18,
+		"implemented": true,
 	},
 	SKILL_SHURIKEN_3: {
 		"id": 20,
 		"key": SKILL_SHURIKEN_3,
 		"description": "Reduce the cooldown of Shuriken",
-		"dependency": 19
+		"dependency": 19,
+		"implemented": true,
 	},
 	SKILL_SHURIKEN_4: {
 		"id": 21,
 		"key": SKILL_SHURIKEN_4,
 		"description": "Player now throws two shurikens",
-		"dependency": 20
+		"dependency": 20,
+		"implemented": true,
 	},
 	SKILL_SHURIKEN_5: {
 		"id": 22,
 		"key": SKILL_SHURIKEN_5,
 		"description": "Each thrown shuriken now bounces to another enemy",
-		"dependency": 21
+		"dependency": 21,
+		"implemented": true,
 	},
 	SKILL_ATTACK_1: {
 		"id": 23,
 		"key": SKILL_ATTACK_1,
-		"description": "After moving, the player swings their sword around them.",
-		"dependency": null
+		"description": "After moving, the player swings their sword around them in a wider arc",
+		"dependency": null,
+		"implemented": true,
 	},
 	SKILL_ATTACK_2: {
 		"id": 24,
 		"key": SKILL_ATTACK_2,
 		"description": "The player deals two damage on attacking.",
-		"dependency": 23
+		"dependency": 23,
+		"implemented": true,
 	},
 	SKILL_ATTACK_3: {
 		"id": 25,
 		"key": SKILL_ATTACK_3,
 		"description": "The player's spin attack after moving does extra damage",
-		"dependency": 24
+		"dependency": 24,
+		"implemented": true,
 	},
 	SKILL_TELEPORT_1: {
 		"id": 26,
 		"key": SKILL_TELEPORT_1,
 		"description": "Learn the Teleport skill",
-		"dependency": null
+		"dependency": null,
+		"implemented": true,
 	},
 	SKILL_TELEPORT_2: {
 		"id": 27,
 		"key": SKILL_TELEPORT_2,
 		"description": "Teleporting now deals damage to all enemies within two spaces of arrival",
-		"dependency": 26
+		"dependency": 26,
+		"implemented": true,
 	},
 	SKILL_TELEPORT_3: {
 		"id": 28,
 		"key": SKILL_TELEPORT_3,
 		"description": "Instantly refresh teleport cooldown if it kills an enemy",
-		"dependency": 27
+		"dependency": 27,
+		"implemented": true,
 	},
 	SKILL_TELEPORT_4: {
 		"id": 29,
 		"key": SKILL_TELEPORT_4,
 		"description": "Teleport deals damage to enemies upon departure",
-		"dependency": 28
+		"dependency": 28,
+		"implemented": true,
 	},
 	SKILL_TELEPORT_5: {
 		"id": 30,
 		"key": SKILL_TELEPORT_5,
 		"description": "Teleport now instantly kills nearby non-boss enemies on arrival",
-		"dependency": 29
+		"dependency": 29,
+		"implemented": true,
 	},
 }

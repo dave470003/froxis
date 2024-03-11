@@ -6,6 +6,7 @@ var _new_InputName := preload("res://library/InputName.gd").new()
 var _initialized: bool = false
 
 signal set_health(health)
+signal start_game
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -28,6 +29,7 @@ func _unhandled_input(event):
 	if event.is_action_pressed(_new_InputName.INIT_GAME):
 		if not _initialized:
 			reset_game()
+			start_game.emit()
 
 func reset_game():
 	_initialized = true

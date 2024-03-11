@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://41j3va1ces38"]
+
+[ext_resource type="Texture2D" uid="uid://ctffxeo6roouo" path="res://resources/curses_vector_24x36.png" id="1_26cbx"]
+[ext_resource type="Script" path="res://sprite/Demon.gd" id="2_eq7f5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6mgi4"]
+atlas = ExtResource("1_26cbx")
+region = Rect2(96, 144, 24, 36)
+
+[node name="Demon" type="Sprite2D"]
+modulate = Color(0.670588, 0.698039, 0.74902, 1)
+texture = SubResource("AtlasTexture_6mgi4")
+script = ExtResource("2_eq7f5")

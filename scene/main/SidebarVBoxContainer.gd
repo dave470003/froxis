@@ -13,7 +13,6 @@ signal game_over(message: String)
 
 func _ready() -> void:
 	_health = 0
-	_label_help.text = "RL Demo"
 
 func _on_InitGame_set_health(health: int):
 	_health = health

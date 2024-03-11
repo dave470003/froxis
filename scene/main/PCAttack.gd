@@ -24,17 +24,22 @@ func _ready():
 func _process(delta):
 	pass
 
-func attack(group_name: String, x: int, y: int) -> void:
+func attack(group_name: String, x: int, y: int, damage: int = 1) -> void:
 	if not _ref_DungeonBoard.has_sprite(group_name, x, y):
 		return
 	var sprite = _ref_DungeonBoard.get_sprite(group_name, x, y)
+	var groups = sprite.get_groups()
 	await _animate_sprite_injury(sprite)
-	await _ref_RemoveObject.remove(group_name, x, y)
-	if !_ref_Shop.has_skill(_new_Skills.SKILL_INVISIBILITY_4):
-		var _pc = _ref_Schedule.get_pc()
-		#remove bad code
-		_pc._on_PCAttack_turn_visible()
-	pc_attacked.emit("You killed the dwarf.")
+	print(sprite)
+	sprite.remove_health(damage)
+	if sprite._health <= 0:
+		for i in range(0, groups.size()):
+			await _ref_RemoveObject.remove(groups[i], x, y)
+		if !_ref_Shop.has_skill(_new_Skills.SKILL_INVISIBILITY_4):
+			var _pc = _ref_Schedule.get_pc()
+			#remove bad code
+			_pc._on_PCAttack_turn_visible()
+		pc_attacked.emit("You killed the enemy.")
 
 func _animate_sprite_injury(sprite: Sprite2D):
 	var tween = sprite.create_tween()

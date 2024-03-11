@@ -26,11 +26,14 @@ var _is_trap_primed: bool = false
 var _is_invisibility_primed: bool = false
 var _is_shuriken_primed: bool = false
 var _is_teleport_primed: bool = false
+var _did_kill: bool = false
 
 signal pc_moved(message)
 signal next_level()
 signal turn_invisible(turns: int)
 signal visit_shrine()
+signal teleport_kill
+signal display_message(message)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -86,6 +89,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	var distance = 1
 	var dir: String
 
+	if _pc._is_invisible and _ref_Shop.has_skill(_new_Skills.SKILL_INVISIBILITY_5):
+		distance = 2
+
 	if _is_charge_primed:
 		distance = 2
 		if _ref_Shop.has_skill(_new_Skills.SKILL_CHARGE_3):
@@ -113,10 +119,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		if _ref_Shop.has_skill(_new_Skills.SKILL_INVISIBILITY_2):
 			invisibility_turns = 4
 		_pc.turn_invisible(invisibility_turns)
+		display_message.emit("Turned inivisble!")
 
 	if _is_teleport_primed:
 		var vector = _ref_DungeonBoard.get_teleport_destination()
 		var teleport_array = _new_ConvertCoord.vector_to_array(vector)
+		if _ref_Shop.has_skill(_new_Skills.SKILL_TELEPORT_4):
+			for a in range(x - 1, x + 2):
+				for b in range(y - 1, y + 2):
+					await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, a, b, 1)
 		try_teleport(teleport_array[0], teleport_array[1])
 	else:
 		await _try_move(x, y, distance, dir)
@@ -199,21 +210,26 @@ func _after_move():
 	var slash_radius = 1
 	if _ref_Shop.has_skill(_new_Skills.SKILL_ATTACK_1):
 		slash_radius = 2
+	var damage = 1
+	if _ref_Shop.has_skill(_new_Skills.SKILL_ATTACK_3):
+		damage = 2
 		# after moving PC tries to attack dwarves in range in circular arc
+	display_message.emit("Sword sweep!")
 	for a in range(x - slash_radius, x + slash_radius + 1):
 		for b in range(y - slash_radius, y + slash_radius + 1):
-			if _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, a, b):
+			if _ref_DungeonBoard.has_sprite(_new_GroupName.ENEMY, a, b):
 				if (abs(x - a) + abs(y - b)) <= slash_radius:
-					await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, a, b)
+					await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, a, b, damage)
 
 	if _is_charge_primed and _ref_Shop.has_skill(_new_Skills.SKILL_CHARGE_1):
 		var stomp_radius = 2
 		if _ref_Shop.has_skill(_new_Skills.SKILL_CHARGE_4):
 			stomp_radius = 3
+		display_message.emit("Stomp attack after charge!")
 		for a in range(x - stomp_radius, x + stomp_radius + 1):
 			for b in range(y - stomp_radius, y + stomp_radius + 1):
-				if _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, a, b):
-					await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, a, b)
+				if _ref_DungeonBoard.has_sprite(_new_GroupName.ENEMY, a, b):
+					await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, a, b)
 
 	if _is_shuriken_primed:
 		var throws = 1
@@ -226,8 +242,15 @@ func _after_move():
 			var enemy = _ref_DungeonBoard._get_closest_enemy_in_range(x, y, range)
 			if enemy is Sprite2D:
 				var enemyPos = _new_ConvertCoord.vector_to_array(enemy.position)
-				await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, enemyPos[0], enemyPos[1])
-				pc_moved.emit("Threw Shuriken")
+				await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, enemyPos[0], enemyPos[1])
+				pc_moved.emit("Threw Shuriken at " + enemy.name)
+				# bounce once
+				if _ref_Shop.has_skill(_new_Skills.SKILL_SHURIKEN_5):
+					var enemy2 = _ref_DungeonBoard._get_closest_enemy_in_range(enemyPos[0], enemyPos[1], range)
+					if enemy is Sprite2D:
+						var enemy2Pos = _new_ConvertCoord.vector_to_array(enemy.position)
+						await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, enemy2Pos[0], enemy2Pos[1])
+						pc_moved.emit("Shuriken bounced to " + enemy2.name)
 
 	if _ref_DungeonBoard.has_sprite(_new_GroupName.SHRINE, x, y):
 		visit_shrine.emit()
@@ -239,9 +262,12 @@ func _try_singular_move(x: int, y: int):
 	elif _ref_DungeonBoard.has_sprite(_new_GroupName.WALL, x, y):
 		pc_moved.emit("Cannot pass wall.")
 		return false
-	elif _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, x, y):
+	elif _ref_DungeonBoard.has_sprite(_new_GroupName.ENEMY, x, y):
+		var damage = 1
+		if _ref_Shop.has_skill(_new_Skills.SKILL_ATTACK_2):
+			damage = 2
 		set_process_unhandled_input(false)
-		await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, x, y)
+		await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, x, y, damage)
 		return false
 	else:
 		set_process_unhandled_input(false)
@@ -249,7 +275,25 @@ func _try_singular_move(x: int, y: int):
 		return true
 
 func lay_trap(x, y):
-	_ref_InitLevel._create_sprite(trap, _new_GroupName.TRAP, x, y)
+	_ref_InitLevel._create_sprite(trap, [_new_GroupName.TRAP], x, y)
+	display_message.emit("Laid down a trap.")
 
 func try_teleport(x, y):
+	display_message.emit("Teleporting!")
+	_did_kill = false
 	_ref_DungeonBoard.update_sprite_position(_pc, x, y)
+	if _ref_Shop.has_skill(_new_Skills.SKILL_TELEPORT_2):
+		for a in range(x - 2, x + 3):
+			for b in range(y - 2, y + 3):
+				var damage = 1
+				var enemy = _ref_DungeonBoard.get_sprite(_new_GroupName.ENEMY, a, b)
+				if _ref_Shop.has_skill(_new_Skills.SKILL_TELEPORT_5) and !enemy.is_in_group(_new_GroupName.DEMON):
+					damage = 999
+				await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, a, b, damage)
+
+	if _did_kill and _ref_Shop.has_skill(_new_Skills.SKILL_TELEPORT_3):
+		teleport_kill.emit()
+		display_message.emit("Teleport killed enemies - cooldown reset")
+
+func _on_PCAttack_pc_attacked():
+	_did_kill = true

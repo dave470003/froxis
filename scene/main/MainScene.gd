@@ -28,7 +28,7 @@ const SIGNAL_BIND: Array = [
 	[
 		"sprite_removed", "_on_RemoveObject_sprite_removed",
 		REMOVE,
-		SCHEDULE, DUNGEON,
+		SCHEDULE, DUNGEON, MAIN_SCENE
 	],
 	[
 		"turn_started", "_on_Schedule_turn_started",
@@ -58,7 +58,7 @@ const SIGNAL_BIND: Array = [
 	[
 		"pc_attacked", "_on_PCAttack_pc_attacked",
 		PC_ATTACK,
-		MODELINE
+		MODELINE, PC_MOVE
 	],
 	[
 		"set_health", "_on_InitGame_set_health",
@@ -175,6 +175,21 @@ const SIGNAL_BIND: Array = [
 		SHOP,
 		SIDEBAR
 	],
+	[
+		"teleport_kill", "_on_PCMove_teleport_kill",
+		PC_MOVE,
+		TELEPORT_SKILL
+	],
+	[
+		"start_game", "_on_InitGame_start_game",
+		INIT_GAME,
+		MAIN_SCENE, MODELINE
+	],
+	[
+		"display_message", "_on_PCMove_display_message",
+		PC_MOVE,
+		MODELINE
+	],
 ]
 
 const NODE_REF: Array = [
@@ -206,7 +221,7 @@ const NODE_REF: Array = [
 	[
 		"_ref_Shop",
 		SHOP,
-		MAIN_SCENE, PC_MOVE, PC_ATTACK
+		MAIN_SCENE, PC_MOVE, PC_ATTACK, NPC
 	],
 ]
 
@@ -215,6 +230,7 @@ const Shop := preload("res://scene/main/Shop.gd")
 @onready var popup := preload("res://scene/gui/Popup.tscn") as PackedScene
 
 var _new_Skills := preload("res://library/Skills.gd").new()
+var _new_GroupName := preload("res://library/GroupName.gd").new()
 var _game_paused = false
 var _ref_Shop: Shop
 
@@ -250,6 +266,7 @@ func restart_game():
 	get_node(TRAP_SKILL).reset()
 	get_node(SHURIKEN_SKILL).reset()
 	get_node(TELEPORT_SKILL).reset()
+	_ref_Shop.reset()
 	_game_paused = false
 
 func _on_PCMove_visit_shrine():
@@ -294,3 +311,31 @@ func _on_PCMove_visit_shrine():
 func purchase_skill(skill_name: String):
 	_ref_Shop.purchase_skill(skill_name)
 	_game_paused = false
+
+func _on_RemoveObject_sprite_removed(sprite, group_name, x, y):
+	if sprite.is_in_group(_new_GroupName.DEMON):
+		_game_paused = true
+		var popup_node = popup.instantiate()
+		var gui_node = get_node("MainGUI")
+		gui_node.add_child(popup_node)
+		popup_node.setup(
+			"You slayed the vicious Demon!
+			You win!",
+			[
+				[
+					32,
+					"Space: Restart Game",
+					Callable(self, "restart_game"),
+					[]
+				]
+			]
+		)
+
+func _on_InitGame_start_game():
+	get_node("MainGUI/SplashScreen").visible = false
+	get_node(CHARGE_SKILL).reset()
+	get_node(INVISIBILITY_SKILL).reset()
+	get_node(TRAP_SKILL).reset()
+	get_node(SHURIKEN_SKILL).reset()
+	get_node(TELEPORT_SKILL).reset()
+

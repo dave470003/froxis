@@ -20,6 +20,11 @@ func _ready():
 func _process(delta):
 	pass
 
+func reset():
+	_bought_skills_ids = []
+	_is_open = true
+	_update_available_skills()
+
 func purchase_skill(skill_name: String):
 	print('here', skill_name)
 	var id = _get_id_for_skill(skill_name)

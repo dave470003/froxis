@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bk6dytwsq5jkx"]
+[gd_scene load_steps=20 format=3 uid="uid://bk6dytwsq5jkx"]
 
 [ext_resource type="Script" path="res://scene/main/MainScene.gd" id="1_x6a0h"]
 [ext_resource type="Script" path="res://scene/main/InitGame.gd" id="2_44ckb"]
@@ -15,6 +15,10 @@
 [ext_resource type="PackedScene" uid="uid://bxggj3f5pmh7w" path="res://sprite/Shrine.tscn" id="12_i7qc2"]
 [ext_resource type="PackedScene" uid="uid://8lrriilsvf05" path="res://sprite/Trap.tscn" id="14_f13va"]
 [ext_resource type="Script" path="res://scene/main/Shop.gd" id="15_v00bv"]
+[ext_resource type="PackedScene" uid="uid://c05ktxr0a7kii" path="res://sprite/Harpy.tscn" id="16_o36qn"]
+[ext_resource type="PackedScene" uid="uid://dwin0140cgh7b" path="res://sprite/Elf.tscn" id="17_cmw3y"]
+[ext_resource type="PackedScene" uid="uid://j2nymjqfi1v5" path="res://sprite/Troll.tscn" id="18_xerx4"]
+[ext_resource type="PackedScene" uid="uid://41j3va1ces38" path="res://sprite/Demon.tscn" id="19_n3ks7"]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_x6a0h")
@@ -58,3 +62,11 @@ script = ExtResource("9_trlfh")
 
 [node name="Shop" type="Node2D" parent="."]
 script = ExtResource("15_v00bv")
+
+[node name="Harpy" parent="." instance=ExtResource("16_o36qn")]
+
+[node name="Elf" parent="." instance=ExtResource("17_cmw3y")]
+
+[node name="Troll" parent="." instance=ExtResource("18_xerx4")]
+
+[node name="Demon" parent="." instance=ExtResource("19_n3ks7")]
