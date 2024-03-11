@@ -79,6 +79,13 @@ layout_mode = 2
 [node name="TeleportSkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("10_6ywmm")]
 layout_mode = 2
 
+[node name="BottomLabel" type="Label" parent="MainHBoxContainer/SidebarVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "r: credits
+u: tutorial"
+vertical_alignment = 2
+
 [node name="SplashScreen" type="PanelContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 0

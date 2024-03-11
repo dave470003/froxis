@@ -339,3 +339,57 @@ func _on_InitGame_start_game():
 	get_node(SHURIKEN_SKILL).reset()
 	get_node(TELEPORT_SKILL).reset()
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.keycode == KEY_R and event.is_pressed() and !event.is_echo():
+		_show_credits()
+	elif event is InputEventKey and event.keycode == KEY_U and event.is_pressed() and !event.is_echo():
+		_show_tutorial()
+
+func _show_credits():
+	_game_paused = true
+	var popup_node = popup.instantiate()
+	var gui_node = get_node("MainGUI")
+	gui_node.add_child(popup_node)
+	popup_node.setup(
+		"Froxis - A game by Foxtale Creative
+		Made for the 7DRL 2024 Challenge
+		Inspired by Bozar and Hoplite",
+		[
+			[
+				KEY_ESCAPE,
+				"ESC: Close Credits",
+				Callable(self, "resume"),
+				[]
+			]
+		]
+	)
+
+func _show_tutorial():
+	_game_paused = true
+	var popup_node = popup.instantiate()
+	var gui_node = get_node("MainGUI")
+	gui_node.add_child(popup_node)
+	popup_node.setup_pages([
+		"You, the player, are represented by @. You are tasked with slaying a demon who resides on the 10th floor of the dungeon.",
+		"The ladder to the next floor is marked by ⌠. There is also a shrine on each level marked by ⌂. Visiting it will grant you special powers to help you on your journey.",
+		"Various creatures will try to stop you:
+		d - a slow, fragile dwarf.
+		T - a troll with three hitpoints.
+		h - a quick, flying harpy with two hitpoints.
+		e - a fragile elf who will try to shoot you from up to four spaces away.
+		D - the demon you are to slay, a fearsome creature",
+		"Luckily you have some skills you can master:
+		Charge: pressing c will make the next attack a charge attack. Initially this is just a little extra movement, but you can upgrade it to perform a powerful stomp attack after your charge.",
+		"Invisibility: You will turn invisible for 3 turns, or until you attack someone. Enemies will not come after you.
+		Lay Trap: Lay down a trap which will injure ground-walking enemies who come across it.",
+		"Shuriken: After movement, hurl a shuriken at the nearest enemy in range of 3 spaces.
+		Teleport: Teleport to a random square in the arena. Upgrading it will allow it to deal damage.",
+		"How combat works:
+		If you were to move (or charge) into an enemy, stop in front of them and deal them damage instead. Then, after your move (or your attack), you will swing your sword around you, hitting anyone adjacent to you and dealing them damage. The range of this sweep can be upgraded in-game.
+		Enemies will then take turns moving towards you, and dealing you damage.",
+		"You'll figure out the rest yourself.
+		Best of luck!"
+	], Callable(self, "resume"),)
+
+func resume():
+	_game_paused = false

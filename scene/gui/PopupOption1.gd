@@ -23,5 +23,5 @@ func setup_callable(callback: Callable, arg):
 	_callback_arg = arg
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.keycode == _triggerKeycode:
+	if event is InputEventKey and event.keycode == _triggerKeycode and event.is_pressed() and !event.is_echo():
 		_callback.call(_callback_arg)

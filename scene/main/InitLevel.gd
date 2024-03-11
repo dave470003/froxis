@@ -96,6 +96,17 @@ func _create_walls_and_floor():
 			else:
 				_create_sprite(Floor, [_new_GroupName.FLOOR], x, y)
 
+	for i in range(0, 10):
+		var rand_x = _rng.randi_range(1, _new_DungeonSize.MAX_X - 1)
+		var rand_y = _rng.randi_range(1, _new_DungeonSize.MAX_Y - 1)
+
+		if _ref_DungeonBoard.has_sprite(_new_GroupName.SHRINE, rand_x, rand_y) \
+			or _ref_DungeonBoard.has_sprite(_new_GroupName.PC, rand_x, rand_y) \
+			or _ref_DungeonBoard.has_sprite(_new_GroupName.LADDER, rand_x, rand_y):
+			continue
+		_create_sprite(Wall, [_new_GroupName.WALL], rand_x, rand_y)
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta) -> void:
 	pass
@@ -107,10 +118,10 @@ func start_level(level_number):
 		n.queue_free()
 	_ref_DungeonBoard.reset()
 	_ref_Schedule.reset()
-	_create_walls_and_floor()
-	_create_player()
 	_create_shrine()
 	_create_ladder()
+	_create_player()
+	_create_walls_and_floor()
 	_create_enemies()
 	level_started.emit(_level)
 
