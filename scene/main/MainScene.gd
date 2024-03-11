@@ -16,6 +16,7 @@ const CHARGE_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/Cha
 const TRAP_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/TrapSkill"
 const INVISIBILITY_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/InvisibilitySkill"
 const SHURIKEN_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/ShurikenSkill"
+const SHOP = "Shop"
 
 const SIGNAL_BIND: Array = [
 	[
@@ -71,7 +72,7 @@ const SIGNAL_BIND: Array = [
 	[
 		"next_level", "_on_PCMove_next_level",
 		PC_MOVE,
-		INIT_GAME
+		INIT_GAME, SHOP
 	],
 	[
 		"game_over", "_on_SidebarVBoxContainer_game_over",
@@ -128,6 +129,26 @@ const SIGNAL_BIND: Array = [
 		PC_MOVE,
 		MAIN_SCENE
 	],
+	[
+		"learn_shuriken", "_on_Shop_learn_shuriken",
+		SHOP,
+		SIDEBAR
+	],
+	[
+		"learn_trap", "_on_Shop_learn_trap",
+		SHOP,
+		SIDEBAR
+	],
+	[
+		"learn_invisibility", "_on_Shop_learn_invisibility",
+		SHOP,
+		SIDEBAR
+	],
+	[
+		"increase_health", "_on_Shop_increase_health",
+		SHOP,
+		SIDEBAR
+	],
 ]
 
 const NODE_REF: Array = [
@@ -156,10 +177,19 @@ const NODE_REF: Array = [
 		INIT_LEVEL,
 		PC_MOVE,
 	],
+	[
+		"_ref_Shop",
+		SHOP,
+		MAIN_SCENE,
+	],
 ]
+
+const Shop := preload("res://scene/main/Shop.gd")
 
 @onready var popup := preload("res://scene/gui/Popup.tscn") as PackedScene
 var _game_paused = false
+
+var _ref_Shop: Shop
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -180,35 +210,49 @@ func _on_SidebarVBoxContainer_game_over(message: String):
 			[
 				32,
 				"Space: Restart Game",
-				Callable(self, "restart_game")
+				Callable(self, "restart_game"),
+				[]
 			]
 		]
 	)
 
 func restart_game():
 	get_node("InitGame").reset_game()
+	get_node(CHARGE_SKILL).reset()
+	get_node(INVISIBILITY_SKILL).reset()
+	get_node(TRAP_SKILL).reset()
+	get_node(SHURIKEN_SKILL).reset()
 	_game_paused = false
 
 func _on_PCMove_visit_shrine():
+	if !_ref_Shop._is_open:
+		return
 	_game_paused = true
 	var popup_node = popup.instantiate()
 	var gui_node = get_node("MainGUI")
+	var available_boons = _ref_Shop._available_skills.slice(0, 3)
 	gui_node.add_child(popup_node)
 	popup_node.setup(
 		"You come across a mysterious shrine.
 		It grants you one of the following boons:
-		1: The Invisibility Skill
-		2: Gain 1 Health",
+		1: {0}
+		2: {1}".format([available_boons[0].description, available_boons[1].description]),
 		[
 			[
 				KEY_1,
 				"1: Option 1",
-				Callable(self, "restart_game")
+				Callable(self, "purchase_skill"),
+				[available_boons[0].key]
 			],
 			[
 				KEY_2,
 				"2: Option 2",
-				Callable(self, "restart_game")
+				Callable(self, "purchase_skill"),
+				[available_boons[1].key]
 			]
 		]
 	)
+
+func purchase_skill(skill_name: String):
+	_ref_Shop.purchase_skill(skill_name)
+	_game_paused = false

@@ -25,6 +25,19 @@ func _on_EnemyAI_enemy_attack(damage: int):
 	if (_health <= 0):
 		game_over.emit("You were killed.")
 
+func _on_Shop_increase_health(amount: int):
+	_health = _health + amount
+	_update_health()
+
+func _on_Shop_learn_shuriken():
+	get_node("Skills/ShurikenSkill").unlock()
+
+func _on_Shop_learn_trap():
+	get_node("Skills/TrapSkill").unlock()
+
+func _on_Shop_learn_invisibility():
+	get_node("Skills/InvisibilitySkill").unlock()
+
 func _on_InitLevel_level_started(level: int):
 	_label_help.text = str("Floor ", level)
 

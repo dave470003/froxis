@@ -4,8 +4,7 @@ extends PanelContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -19,9 +18,11 @@ func setup(popup_text, popup_options):
 		var popup_option = popupOption.instantiate()
 		popup_option.setup_trigger_char(popup_options[i][0])
 		popup_option.get_node("PopupOptionMargin/PopupOption").text = popup_options[i][1]
-		popup_option.setup_callable(Callable(self, "callback"), popup_options[i][2])
+		popup_option.setup_callable(Callable(self, "callback"), [popup_options[i][2], popup_options[i][3]])
 		get_node('PopupOptionsContainer/PopupOptions').add_child(popup_option)
 
-func callback(outer_callback: Callable):
-	outer_callback.call()
+func callback(args):
+	var outer_callback = args[0]
+	var outer_args = args[1]
+	outer_callback.callv(outer_args)
 	self.queue_free()

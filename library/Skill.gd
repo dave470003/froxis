@@ -24,6 +24,9 @@ signal skill_unprimed(skill_name: String)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_is_skill_unlocked = _is_skill_unlocked_at_start
+	if !_is_skill_unlocked:
+		visible = false
+	_update_cooldown_sprites()
 
 func reset():
 	_cooldown_remaining = 0

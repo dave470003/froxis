@@ -25,8 +25,10 @@ theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
 [node name="PopupText" type="Label" parent="PopupMargin"]
+custom_minimum_size = Vector2(250, 2.08165e-12)
 layout_mode = 2
 size_flags_vertical = 1
+autowrap_mode = 2
 
 [node name="PopupOptionsContainer" type="Control" parent="."]
 custom_minimum_size = Vector2(2.08165e-12, 50)
