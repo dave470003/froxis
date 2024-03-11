@@ -16,13 +16,16 @@ func _process(delta):
 func _on_PCMove_turn_invisible(turns):
 	turn_invisible(turns)
 
+func _on_PCAttack_turn_visible():
+	_set_is_invisible(false)
+	_invisible_turns = 0
+
 func turn_invisible(turns):
 	_set_is_invisible(true)
 	_invisible_turns = turns
 
 func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
 	if current_sprite.is_in_group(_new_GroupName.PC):
-		print('he')
 		if _invisible_turns > 0:
 			_invisible_turns = _invisible_turns - 1
 		if _invisible_turns == 0:

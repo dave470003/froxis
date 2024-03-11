@@ -25,7 +25,6 @@ func _on_InitLevel_sprite_created(new_sprite: Sprite2D) -> void:
 	elif new_sprite.is_in_group(_new_GroupName.DWARF):
 		_actors.append(new_sprite)
 
-
 func end_turn() -> void:
 	turn_ended.emit(_get_current())
 	_goto_next()
@@ -49,3 +48,6 @@ func _on_RemoveObject_sprite_removed(remove_sprite: Sprite2D,
 
 	_actors.erase(remove_sprite)
 	_pointer = _actors.find(current_sprite)
+
+func get_pc():
+	return _actors[0]

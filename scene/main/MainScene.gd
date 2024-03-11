@@ -125,6 +125,11 @@ const SIGNAL_BIND: Array = [
 		PC
 	],
 	[
+		"turn_visible", "_on_PCAttack_turn_visible",
+		PC_ATTACK,
+		PC
+	],
+	[
 		"visit_shrine", "_on_PCMove_visit_shrine",
 		PC_MOVE,
 		MAIN_SCENE
@@ -141,6 +146,11 @@ const SIGNAL_BIND: Array = [
 	],
 	[
 		"learn_invisibility", "_on_Shop_learn_invisibility",
+		SHOP,
+		SIDEBAR
+	],
+	[
+		"reduce_skill_cooldown", "_on_Shop_reduce_skill_cooldown",
 		SHOP,
 		SIDEBAR
 	],
@@ -180,15 +190,16 @@ const NODE_REF: Array = [
 	[
 		"_ref_Shop",
 		SHOP,
-		MAIN_SCENE,
+		MAIN_SCENE, PC_MOVE, PC_ATTACK
 	],
 ]
 
 const Shop := preload("res://scene/main/Shop.gd")
 
 @onready var popup := preload("res://scene/gui/Popup.tscn") as PackedScene
-var _game_paused = false
 
+var _new_Skills := preload("res://library/Skills.gd").new()
+var _game_paused = false
 var _ref_Shop: Shop
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -232,12 +243,12 @@ func _on_PCMove_visit_shrine():
 	var gui_node = get_node("MainGUI")
 	var available_boons = _ref_Shop._available_skills.slice(0, 3)
 	gui_node.add_child(popup_node)
-	popup_node.setup(
-		"You come across a mysterious shrine.
+	var initial_text = "You come across a mysterious shrine.
 		It grants you one of the following boons:
 		1: {0}
-		2: {1}".format([available_boons[0].description, available_boons[1].description]),
-		[
+		2: {1}"
+	var format_array = [available_boons[0].description, available_boons[1].description]
+	var options = [
 			[
 				KEY_1,
 				"1: Option 1",
@@ -251,7 +262,17 @@ func _on_PCMove_visit_shrine():
 				[available_boons[1].key]
 			]
 		]
-	)
+	if _ref_Shop.has_skill(_new_Skills.SKILL_GET_AMULET):
+		initial_text = initial_text + "
+		3: {2}"
+		format_array.append(available_boons[2].description)
+		options.append([
+			KEY_3,
+			"3: Option 3",
+			Callable(self, "purchase_skill"),
+			[available_boons[2].key]
+		])
+	popup_node.setup(initial_text.format(format_array), options)
 
 func purchase_skill(skill_name: String):
 	_ref_Shop.purchase_skill(skill_name)

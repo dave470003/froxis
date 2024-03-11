@@ -4,6 +4,7 @@ const Schedule := preload("res://scene/main/Schedule.gd")
 const DungeonBoard := preload("res://scene/main/DungeonBoard.gd")
 const MainScene := preload("res://scene/main/MainScene.gd")
 const InitLevel := preload("res://scene/main/InitLevel.gd")
+const Shop := preload("res://scene/main/Shop.gd")
 const PC_ATTACK: String = "PCAttack"
 
 @onready var trap := preload("res://sprite/Trap.tscn") as PackedScene
@@ -11,11 +12,13 @@ const PC_ATTACK: String = "PCAttack"
 var _new_InputName := preload("res://library/InputName.gd").new()
 var _new_ConvertCoord := preload("res://library/ConvertCoord.gd").new()
 var _new_GroupName := preload("res://library/GroupName.gd").new()
+var _new_Skills := preload("res://library/Skills.gd").new()
 
 var _ref_Schedule: Schedule
 var _ref_DungeonBoard: DungeonBoard
 var _ref_MainScene: MainScene
 var _ref_InitLevel: InitLevel
+var _ref_Shop: Shop
 var _pc: Sprite2D
 var _trigger_next_level: bool = false
 var _is_charge_primed: bool = false
@@ -78,6 +81,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if _is_charge_primed:
 		distance = 2
+		if _ref_Shop.has_skill(_new_Skills.SKILL_CHARGE_3):
+			distance = 3
 
 	if _is_move_input(event):
 		if event.is_action_pressed(_new_InputName.MOVE_LEFT) && !event.is_echo():
@@ -97,7 +102,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		lay_trap(x, y)
 
 	if _is_invisibility_primed:
-		_pc.turn_invisible(3)
+		var invisibility_turns = 3
+		if _ref_Shop.has_skill(_new_Skills.SKILL_INVISIBILITY_2):
+			invisibility_turns = 4
+		_pc.turn_invisible(invisibility_turns)
 
 	await _try_move(x, y, distance, dir)
 	await _after_move()
@@ -175,20 +183,37 @@ func _after_move():
 	var y: int = source[1]
 
 	var slash_radius = 1
-	if _is_charge_primed:
+	if _ref_Shop.has_skill(_new_Skills.SKILL_ATTACK_1):
 		slash_radius = 2
-	# after moving PC tries to attack dwarves in range
+		# after moving PC tries to attack dwarves in range in circular arc
 	for a in range(x - slash_radius, x + slash_radius + 1):
 		for b in range(y - slash_radius, y + slash_radius + 1):
 			if _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, a, b):
-				await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, a, b)
+				if (abs(x - a) + abs(y - b)) <= slash_radius:
+					await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, a, b)
+
+	if _is_charge_primed and _ref_Shop.has_skill(_new_Skills.SKILL_CHARGE_1):
+		var stomp_radius = 2
+		if _ref_Shop.has_skill(_new_Skills.SKILL_CHARGE_4):
+			stomp_radius = 3
+		for a in range(x - stomp_radius, x + stomp_radius + 1):
+			for b in range(y - stomp_radius, y + stomp_radius + 1):
+				if _ref_DungeonBoard.has_sprite(_new_GroupName.DWARF, a, b):
+					await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, a, b)
 
 	if _is_shuriken_primed:
-		var enemy = _ref_DungeonBoard._get_closest_enemy(x, y)
-		if enemy is Sprite2D:
-			var enemyPos = _new_ConvertCoord.vector_to_array(enemy.position)
-			await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, enemyPos[0], enemyPos[1])
-			pc_moved.emit("Threw Shuriken")
+		var throws = 1
+		if _ref_Shop.has_skill(_new_Skills.SKILL_SHURIKEN_4):
+			throws = 2
+		for i in range(0, throws):
+			var range = 3
+			if _ref_Shop.has_skill(_new_Skills.SKILL_SHURIKEN_2):
+				range = 4
+			var enemy = _ref_DungeonBoard._get_closest_enemy_in_range(x, y, range)
+			if enemy is Sprite2D:
+				var enemyPos = _new_ConvertCoord.vector_to_array(enemy.position)
+				await get_node(PC_ATTACK).attack(_new_GroupName.DWARF, enemyPos[0], enemyPos[1])
+				pc_moved.emit("Threw Shuriken")
 
 	if _ref_DungeonBoard.has_sprite(_new_GroupName.SHRINE, x, y):
 		visit_shrine.emit()

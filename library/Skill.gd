@@ -3,6 +3,7 @@ extends PanelContainer
 const MainScene := preload("res://scene/main/MainScene.gd")
 
 var _triggerChar: int
+var _initial_cooldown: int
 var _cooldown: int
 var _cooldown_remaining: int = 0
 var _is_skill_unlocked: bool = false
@@ -23,6 +24,7 @@ signal skill_unprimed(skill_name: String)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	_cooldown = _initial_cooldown
 	_is_skill_unlocked = _is_skill_unlocked_at_start
 	if !_is_skill_unlocked:
 		visible = false
@@ -30,6 +32,7 @@ func _ready():
 
 func reset():
 	_cooldown_remaining = 0
+	_cooldown = _initial_cooldown
 	_is_skill_unlocked = _is_skill_unlocked_at_start
 	_is_skill_primed = false
 
@@ -113,5 +116,9 @@ func _update_cooldown_sprites():
 		empty_charge_node.position = Vector2(xpos, 0)
 		xpos = xpos + 24
 
+func reduce_cooldown():
+	_cooldown = _cooldown - 1
+	if _cooldown_remaining > 0:
+		_cooldown_remaining = _cooldown_remaining - 1
 
 

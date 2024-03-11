@@ -90,10 +90,10 @@ func _init_dict() -> void:
 func _on_RemoveObject_sprite_removed(_sprite: Sprite2D, group_name: String,
 		x: int, y: int) -> void:
 	_sprite_dict[group_name][x][y] = null
-	
-func _get_closest_enemy(x, y):
+
+func _get_closest_enemy_in_range(x, y, range):
 	var enemy = null
-	var dist = 3;
+	var dist = range;
 	for i in range(0, _new_DungeonSize.MAX_X):
 		for j in range(0, _new_DungeonSize.MAX_Y):
 			if _sprite_dict[_new_GroupName.DWARF][i][j] is Sprite2D:
@@ -101,4 +101,4 @@ func _get_closest_enemy(x, y):
 					enemy = _sprite_dict[_new_GroupName.DWARF][i][j]
 					dist = abs(i - x) + abs(j - y)
 	return enemy
-				
+

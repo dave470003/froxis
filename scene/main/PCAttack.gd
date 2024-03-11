@@ -3,13 +3,17 @@ extends Node2D
 const DungeonBoard := preload("res://scene/main/DungeonBoard.gd")
 const RemoveObject := preload("res://scene/main/RemoveObject.gd")
 const Schedule := preload("res://scene/main/Schedule.gd")
+const Shop := preload("res://scene/main/Shop.gd")
 
 var _new_Colours := preload("res://library/Colours.gd").new()
+var _new_Skills := preload("res://library/Skills.gd").new()
 var _ref_DungeonBoard: DungeonBoard
 var _ref_RemoveObject: RemoveObject
 var _ref_Schedule: Schedule
+var _ref_Shop: Shop
 
 signal pc_attacked
+signal turn_visible
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,6 +30,10 @@ func attack(group_name: String, x: int, y: int) -> void:
 	var sprite = _ref_DungeonBoard.get_sprite(group_name, x, y)
 	await _animate_sprite_injury(sprite)
 	await _ref_RemoveObject.remove(group_name, x, y)
+	if !_ref_Shop.has_skill(_new_Skills.SKILL_INVISIBILITY_4):
+		var _pc = _ref_Schedule.get_pc()
+		#remove bad code
+		_pc._on_PCAttack_turn_visible()
 	pc_attacked.emit("You killed the dwarf.")
 
 func _animate_sprite_injury(sprite: Sprite2D):

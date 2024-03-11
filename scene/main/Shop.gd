@@ -9,6 +9,7 @@ signal increase_health(amount: int)
 signal learn_shuriken()
 signal learn_trap()
 signal learn_invisibility()
+signal reduce_skill_cooldown()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -68,6 +69,14 @@ func _after_purchase_skill(skill_name):
 			learn_invisibility.emit()
 		_new_Skills.SKILL_SHURIKEN_1:
 			learn_shuriken.emit()
+		_new_Skills.SKILL_INVISIBILITY_3:
+			reduce_skill_cooldown.emit("invisibility")
+		_new_Skills.SKILL_CHARGE_2:
+			reduce_skill_cooldown.emit("charge")
+		_new_Skills.SKILL_TRAP_2:
+			reduce_skill_cooldown.emit("trap")
+		_new_Skills.SKILL_SHURIKEN_3:
+			reduce_skill_cooldown.emit("shuriken")
 
 func _on_PCMove_next_level():
 	_is_open = true

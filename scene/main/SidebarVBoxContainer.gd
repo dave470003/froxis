@@ -38,6 +38,17 @@ func _on_Shop_learn_trap():
 func _on_Shop_learn_invisibility():
 	get_node("Skills/InvisibilitySkill").unlock()
 
+func _on_Shop_reduce_skill_cooldown(skill_name: String):
+	match skill_name:
+		"invisibility":
+			get_node("Skills/InvisibilitySkill").reduce_cooldown()
+		"charge":
+			get_node("Skills/ChargeSkill").reduce_cooldown()
+		"trap":
+			get_node("Skills/TrapSkill").reduce_cooldown()
+		"shuriken":
+			get_node("Skills/ShurikenSkill").reduce_cooldown()
+
 func _on_InitLevel_level_started(level: int):
 	_label_help.text = str("Floor ", level)
 

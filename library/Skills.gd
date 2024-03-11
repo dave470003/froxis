@@ -172,7 +172,7 @@ const SKILL_DICT = {
 	SKILL_ATTACK_2: {
 		"id": 24,
 		"key": SKILL_ATTACK_2,
-		"description": "The player deals 2 damage on attacking.",
+		"description": "The player deals two damage on attacking.",
 		"dependency": 23
 	},
 	SKILL_ATTACK_3: {
@@ -184,7 +184,7 @@ const SKILL_DICT = {
 	SKILL_TELEPORT_1: {
 		"id": 26,
 		"key": SKILL_TELEPORT_1,
-		"description": "Teleporting now deals damage to all enemies within 2 spaces of arrival",
+		"description": "Teleporting now deals damage to all enemies within two spaces of arrival",
 		"dependency": null
 	},
 	SKILL_TELEPORT_2: {
