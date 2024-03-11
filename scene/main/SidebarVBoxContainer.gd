@@ -32,6 +32,9 @@ func _on_Shop_increase_health(amount: int):
 func _on_Shop_learn_shuriken():
 	get_node("Skills/ShurikenSkill").unlock()
 
+func _on_Shop_learn_teleport():
+	get_node("Skills/TeleportSkill").unlock()
+
 func _on_Shop_learn_trap():
 	get_node("Skills/TrapSkill").unlock()
 
@@ -48,6 +51,8 @@ func _on_Shop_reduce_skill_cooldown(skill_name: String):
 			get_node("Skills/TrapSkill").reduce_cooldown()
 		"shuriken":
 			get_node("Skills/ShurikenSkill").reduce_cooldown()
+		"teleport":
+			get_node("Skills/TeleportSkill").reduce_cooldown()
 
 func _on_InitLevel_level_started(level: int):
 	_label_help.text = str("Floor ", level)

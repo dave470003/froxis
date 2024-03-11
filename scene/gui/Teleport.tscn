@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqivtgljq6t0s"]
+
+[ext_resource type="PackedScene" uid="uid://yj0d500vgn2k" path="res://scene/gui/Skill.tscn" id="1_5yg31"]
+[ext_resource type="Script" path="res://scene/gui/Teleport.gd" id="2_hxn6v"]
+
+[node name="TeleportSkill" instance=ExtResource("1_5yg31")]
+modulate = Color(0.517647, 0.156863, 1, 1)
+script = ExtResource("2_hxn6v")
+
+[node name="SkillName" parent="SkillMarginWrapper/VBoxContainer" index="0"]
+text = "Teleport (t)
+"

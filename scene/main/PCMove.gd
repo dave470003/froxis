@@ -25,6 +25,7 @@ var _is_charge_primed: bool = false
 var _is_trap_primed: bool = false
 var _is_invisibility_primed: bool = false
 var _is_shuriken_primed: bool = false
+var _is_teleport_primed: bool = false
 
 signal pc_moved(message)
 signal next_level()
@@ -69,6 +70,12 @@ func _on_Shuriken_skill_primed():
 func _on_Shuriken_skill_unprimed():
 	_is_shuriken_primed = false
 
+func _on_Teleport_skill_primed():
+	_is_teleport_primed = true
+
+func _on_Teleport_skill_unprimed():
+	_is_teleport_primed = false
+
 func _unhandled_input(event: InputEvent) -> void:
 	if _ref_MainScene._game_paused == true:
 		return
@@ -107,7 +114,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			invisibility_turns = 4
 		_pc.turn_invisible(invisibility_turns)
 
-	await _try_move(x, y, distance, dir)
+	if _is_teleport_primed:
+		var vector = _ref_DungeonBoard.get_teleport_destination()
+		var teleport_array = _new_ConvertCoord.vector_to_array(vector)
+		try_teleport(teleport_array[0], teleport_array[1])
+	else:
+		await _try_move(x, y, distance, dir)
+
 	await _after_move()
 	_trigger_end_turn()
 
@@ -115,6 +128,7 @@ func _trigger_end_turn():
 	_is_charge_primed = false
 	_is_trap_primed = false
 	_is_shuriken_primed = false
+	_is_teleport_primed = false
 	_is_invisibility_primed = false
 	if _trigger_next_level:
 		_trigger_next_level = false
@@ -237,3 +251,5 @@ func _try_singular_move(x: int, y: int):
 func lay_trap(x, y):
 	_ref_InitLevel._create_sprite(trap, _new_GroupName.TRAP, x, y)
 
+func try_teleport(x, y):
+	_ref_DungeonBoard.update_sprite_position(_pc, x, y)

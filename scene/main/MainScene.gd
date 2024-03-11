@@ -16,6 +16,7 @@ const CHARGE_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/Cha
 const TRAP_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/TrapSkill"
 const INVISIBILITY_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/InvisibilitySkill"
 const SHURIKEN_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/ShurikenSkill"
+const TELEPORT_SKILL: = "MainGUI/MainHBoxContainer/SidebarVBoxContainer/Skills/TeleportSkill"
 const SHOP = "Shop"
 
 const SIGNAL_BIND: Array = [
@@ -37,7 +38,7 @@ const SIGNAL_BIND: Array = [
 	[
 		"turn_ended", "_on_Schedule_turn_ended",
 		SCHEDULE,
-		MODELINE, CHARGE_SKILL, TRAP_SKILL, INVISIBILITY_SKILL, SHURIKEN_SKILL
+		MODELINE, CHARGE_SKILL, TRAP_SKILL, INVISIBILITY_SKILL, SHURIKEN_SKILL, TELEPORT_SKILL
 	],
 	[
 		"enemy_warned", "_on_EnemyAI_enemy_warned",
@@ -120,6 +121,16 @@ const SIGNAL_BIND: Array = [
 		PC_MOVE
 	],
 	[
+		"skill_primed", "_on_Teleport_skill_primed",
+		TELEPORT_SKILL,
+		PC_MOVE
+	],
+	[
+		"skill_unprimed", "_on_Teleport_skill_unprimed",
+		TELEPORT_SKILL,
+		PC_MOVE
+	],
+	[
 		"turn_invisible", "_on_PCMove_turn_invisible",
 		PC_MOVE,
 		PC
@@ -136,6 +147,11 @@ const SIGNAL_BIND: Array = [
 	],
 	[
 		"learn_shuriken", "_on_Shop_learn_shuriken",
+		SHOP,
+		SIDEBAR
+	],
+	[
+		"learn_teleport", "_on_Shop_learn_teleport",
 		SHOP,
 		SIDEBAR
 	],
@@ -180,7 +196,7 @@ const NODE_REF: Array = [
 	[
 		"_ref_MainScene",
 		MAIN_SCENE,
-		PC_MOVE, CHARGE_SKILL, TRAP_SKILL, INVISIBILITY_SKILL, SHURIKEN_SKILL
+		PC_MOVE, CHARGE_SKILL, TRAP_SKILL, INVISIBILITY_SKILL, SHURIKEN_SKILL, TELEPORT_SKILL
 	],
 	[
 		"_ref_InitLevel",
@@ -233,6 +249,7 @@ func restart_game():
 	get_node(INVISIBILITY_SKILL).reset()
 	get_node(TRAP_SKILL).reset()
 	get_node(SHURIKEN_SKILL).reset()
+	get_node(TELEPORT_SKILL).reset()
 	_game_paused = false
 
 func _on_PCMove_visit_shrine():

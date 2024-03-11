@@ -1,7 +1,6 @@
 # Skills.gd
 
 const SKILL_UPGRADE_HEALTH = "skill_upgrade_health"
-const SKILL_GET_TELEPORT = "skill_get_teleport"
 const SKILL_GET_AMULET = "skill_get_amulet"
 const SKILL_INVISIBILITY_1 = "skill_invisibility_1"
 const SKILL_INVISIBILITY_2 = "skill_invisibility_2"
@@ -29,18 +28,13 @@ const SKILL_TELEPORT_1 = "skill_teleport_1"
 const SKILL_TELEPORT_2 = "skill_teleport_2"
 const SKILL_TELEPORT_3 = "skill_teleport_3"
 const SKILL_TELEPORT_4 = "skill_teleport_4"
+const SKILL_TELEPORT_5 = "skill_teleport_5"
 
 const SKILL_DICT = {
 	SKILL_UPGRADE_HEALTH: {
 		"id": 1,
 		"key": SKILL_UPGRADE_HEALTH,
 		"description": "Add one health.",
-		"dependency": null
-	},
-	SKILL_GET_TELEPORT: {
-		"id": 2,
-		"key": SKILL_GET_TELEPORT,
-		"description": "Obtain a scroll of teleportation",
 		"dependency": null
 	},
 	SKILL_GET_AMULET: {
@@ -184,25 +178,31 @@ const SKILL_DICT = {
 	SKILL_TELEPORT_1: {
 		"id": 26,
 		"key": SKILL_TELEPORT_1,
-		"description": "Teleporting now deals damage to all enemies within two spaces of arrival",
+		"description": "Learn the Teleport skill",
 		"dependency": null
 	},
 	SKILL_TELEPORT_2: {
 		"id": 27,
 		"key": SKILL_TELEPORT_2,
-		"description": "Small chance to find teleport scrolls after killing enemies",
+		"description": "Teleporting now deals damage to all enemies within two spaces of arrival",
 		"dependency": 26
 	},
 	SKILL_TELEPORT_3: {
 		"id": 28,
 		"key": SKILL_TELEPORT_3,
-		"description": "Teleport deals damage to enemies upon departure",
+		"description": "Instantly refresh teleport cooldown if it kills an enemy",
 		"dependency": 27
 	},
 	SKILL_TELEPORT_4: {
 		"id": 29,
 		"key": SKILL_TELEPORT_4,
-		"description": "Teleport now instantly kills nearby non-boss enemies on arrival",
+		"description": "Teleport deals damage to enemies upon departure",
 		"dependency": 28
+	},
+	SKILL_TELEPORT_5: {
+		"id": 30,
+		"key": SKILL_TELEPORT_5,
+		"description": "Teleport now instantly kills nearby non-boss enemies on arrival",
+		"dependency": 29
 	},
 }

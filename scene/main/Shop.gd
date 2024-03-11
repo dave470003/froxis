@@ -7,6 +7,7 @@ var _is_open: bool = true
 
 signal increase_health(amount: int)
 signal learn_shuriken()
+signal learn_teleport()
 signal learn_trap()
 signal learn_invisibility()
 signal reduce_skill_cooldown()
@@ -69,6 +70,8 @@ func _after_purchase_skill(skill_name):
 			learn_invisibility.emit()
 		_new_Skills.SKILL_SHURIKEN_1:
 			learn_shuriken.emit()
+		_new_Skills.SKILL_TELEPORT_1:
+			learn_teleport.emit()
 		_new_Skills.SKILL_INVISIBILITY_3:
 			reduce_skill_cooldown.emit("invisibility")
 		_new_Skills.SKILL_CHARGE_2:

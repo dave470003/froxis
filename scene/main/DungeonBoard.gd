@@ -4,10 +4,12 @@ var _new_DungeonSize := preload("res://library/DungeonSize.gd").new()
 var _new_GroupName := preload("res://library/GroupName.gd").new()
 var _new_ConvertCoord := preload("res://library/ConvertCoord.gd").new()
 var _sprite_dict: Dictionary
+var _rng := RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_init_dict()
+	_rng.randomize()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -102,3 +104,13 @@ func _get_closest_enemy_in_range(x, y, range):
 					dist = abs(i - x) + abs(j - y)
 	return enemy
 
+func get_teleport_destination():
+	var x
+	var y
+	while true:
+		x = _rng.randi_range(1, _new_DungeonSize.MAX_X - 1)
+		y = _rng.randi_range(1, _new_DungeonSize.MAX_Y - 1)
+		if has_sprite(_new_GroupName.DWARF, x, y) || has_sprite(_new_GroupName.WALL, x, y):
+			continue
+		break
+	return _new_ConvertCoord.index_to_vector(x, y)

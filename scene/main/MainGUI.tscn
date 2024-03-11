@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dpl6chwdfk2qh"]
+[gd_scene load_steps=11 format=3 uid="uid://dpl6chwdfk2qh"]
 
 [ext_resource type="Theme" uid="uid://6wwc8qstr4f2" path="res://scene/main/FiraTheme.tres" id="1_wwogm"]
 [ext_resource type="PackedScene" uid="uid://c0i6fvkncwr2i" path="res://scene/main/GUIText.tscn" id="2_07pmd"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://qm0a255xcye4" path="res://scene/gui/Trap.tscn" id="7_kx4lj"]
 [ext_resource type="PackedScene" uid="uid://63sghw7wvnps" path="res://scene/gui/Shuriken.tscn" id="8_hgq6a"]
 [ext_resource type="PackedScene" uid="uid://opglvlemqeg8" path="res://scene/gui/Invisibility.tscn" id="9_dmsgr"]
+[ext_resource type="PackedScene" uid="uid://cqivtgljq6t0s" path="res://scene/gui/Teleport.tscn" id="10_6ywmm"]
 
 [node name="MainGUI" type="MarginContainer"]
 offset_right = 800.0
@@ -63,4 +64,7 @@ layout_mode = 2
 
 [node name="ShurikenSkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("8_hgq6a")]
 visible = false
+layout_mode = 2
+
+[node name="TeleportSkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("10_6ywmm")]
 layout_mode = 2
