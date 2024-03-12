@@ -23,6 +23,11 @@ func _process(delta):
 func reset():
 	_bought_skills_ids = []
 	_is_open = true
+
+	# for debugging only
+	# for i in range(0, _new_Skills.SKILL_DICT.keys().size()):
+	# 	purchase_skill(_new_Skills.SKILL_DICT.keys()[i])
+
 	_update_available_skills()
 
 func purchase_skill(skill_name: String):
@@ -40,7 +45,9 @@ func _update_available_skills():
 	var skill
 	for i in range(0, _new_Skills.SKILL_DICT.values().size()):
 		skill = _new_Skills.SKILL_DICT.values()[i]
-		if _bought_skills_ids.has(skill.id):
+		if (!skill.has("implemented") or skill.implemented != true):
+			continue
+		if _bought_skills_ids.has(skill.id) and (!skill.has("repeatable") or skill.repeatable != true):
 			continue
 		if skill.dependency == null:
 			local_available_skills.append(skill)

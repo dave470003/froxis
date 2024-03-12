@@ -44,6 +44,7 @@ func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
 			if _pc_is_close(_pc, current_sprite):
 				await _animate_enemy_attack(_pc, current_sprite)
 				display_message.emit("{0} deals you damage!".format([current_sprite._name]))
+				enemy_attack.emit(1)
 
 	_ref_Schedule.end_turn()
 
@@ -109,6 +110,9 @@ func trap_detonate(x, y, current_sprite):
 	for a in range(x - radius, x + radius + 1):
 		for b in range(y - radius, y + radius + 1):
 			var sprite = _ref_DungeonBoard.get_sprite(_new_GroupName.ENEMY, a, b)
+			if sprite == null:
+				continue
+			await _animate_sprite_injury(sprite)
 			sprite.remove_health(1)
 			display_message.emit("The trap deals damage to {0}".format([sprite._name]))
 			if sprite._health <= 0:
@@ -116,3 +120,9 @@ func trap_detonate(x, y, current_sprite):
 				for i in range(0, groups.size()):
 					await _ref_RemoveObject.remove(groups[i], a, b)
 	await _ref_RemoveObject.remove(_new_GroupName.TRAP, x, y)
+
+func _animate_sprite_injury(sprite: Sprite2D):
+	var tween = sprite.create_tween()
+	tween.tween_property(sprite, "modulate", Color.RED, 0.2)
+	tween.tween_property(sprite, "modulate", Color(_new_Colours.LIGHT_GREY), 0.2)
+	await tween.finished

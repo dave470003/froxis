@@ -32,12 +32,12 @@ const SIGNAL_BIND: Array = [
 	[
 		"turn_started", "_on_Schedule_turn_started",
 		SCHEDULE,
-		PC_MOVE, NPC, SIDEBAR
+		PC_MOVE, NPC, SIDEBAR, MODELINE
 	],
 	[
 		"turn_ended", "_on_Schedule_turn_ended",
 		SCHEDULE,
-		MODELINE, CHARGE_SKILL, TRAP_SKILL, INVISIBILITY_SKILL, SHURIKEN_SKILL, TELEPORT_SKILL
+		CHARGE_SKILL, TRAP_SKILL, INVISIBILITY_SKILL, SHURIKEN_SKILL, TELEPORT_SKILL
 	],
 	[
 		"enemy_warned", "_on_EnemyAI_enemy_warned",
@@ -182,6 +182,11 @@ const SIGNAL_BIND: Array = [
 	[
 		"display_message", "_on_PCAttack_display_message",
 		PC_ATTACK,
+		MODELINE
+	],
+	[
+		"display_message", "_on_EnemyAI_display_message",
+		NPC,
 		MODELINE
 	],
 ]
@@ -332,6 +337,7 @@ func _on_InitGame_start_game():
 	get_node(TRAP_SKILL).reset()
 	get_node(SHURIKEN_SKILL).reset()
 	get_node(TELEPORT_SKILL).reset()
+	_ref_Shop.reset()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.keycode == KEY_R and event.is_pressed() and !event.is_echo():

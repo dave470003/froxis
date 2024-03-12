@@ -215,21 +215,21 @@ func _after_move():
 	if _ref_Shop.has_skill(_new_Skills.SKILL_ATTACK_3):
 		damage = 2
 		# after moving PC tries to attack dwarves in range in circular arc
-	display_message.emit("Sword sweep after move!")
 	for a in range(x - slash_radius, x + slash_radius + 1):
 		for b in range(y - slash_radius, y + slash_radius + 1):
 			if _ref_DungeonBoard.has_sprite(_new_GroupName.ENEMY, a, b):
 				if (abs(x - a) + abs(y - b)) <= slash_radius:
+					display_message.emit("Sword sweep after move!")
 					await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, a, b, damage)
 
 	if _is_charge_primed and _ref_Shop.has_skill(_new_Skills.SKILL_CHARGE_1):
 		var stomp_radius = 2
 		if _ref_Shop.has_skill(_new_Skills.SKILL_CHARGE_4):
 			stomp_radius = 3
-		display_message.emit("Stomp attack after charge!")
 		for a in range(x - stomp_radius, x + stomp_radius + 1):
 			for b in range(y - stomp_radius, y + stomp_radius + 1):
 				if _ref_DungeonBoard.has_sprite(_new_GroupName.ENEMY, a, b):
+					display_message.emit("Stomp attack after charge!")
 					await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, a, b)
 
 	if _is_shuriken_primed:
@@ -248,7 +248,7 @@ func _after_move():
 				# bounce once
 				if _ref_Shop.has_skill(_new_Skills.SKILL_SHURIKEN_5):
 					var enemy2 = _ref_DungeonBoard._get_closest_enemy_in_range(enemyPos[0], enemyPos[1], range)
-					if enemy is Sprite2D:
+					if enemy2 is Sprite2D:
 						var enemy2Pos = _new_ConvertCoord.vector_to_array(enemy.position)
 						await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, enemy2Pos[0], enemy2Pos[1])
 						pc_moved.emit("Shuriken bounced to " + enemy2._name)
@@ -290,9 +290,10 @@ func try_teleport(x, y):
 			for b in range(y - 2, y + 3):
 				var damage = 1
 				var enemy = _ref_DungeonBoard.get_sprite(_new_GroupName.ENEMY, a, b)
-				if _ref_Shop.has_skill(_new_Skills.SKILL_TELEPORT_5) and !enemy.is_in_group(_new_GroupName.DEMON):
-					damage = 999
-				await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, a, b, damage)
+				if enemy != null:
+					if _ref_Shop.has_skill(_new_Skills.SKILL_TELEPORT_5) and !enemy.is_in_group(_new_GroupName.DEMON):
+						damage = 999
+					await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, a, b, damage)
 
 	if _did_kill and _ref_Shop.has_skill(_new_Skills.SKILL_TELEPORT_3):
 		teleport_kill.emit()

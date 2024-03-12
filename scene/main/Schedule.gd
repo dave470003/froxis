@@ -48,10 +48,9 @@ func _on_RemoveObject_sprite_removed(remove_sprite: Sprite2D,
 
 	_actors.erase(remove_sprite)
 
-	if current_sprite != null and current_sprite != remove_sprite:
-		_pointer = _actors.find(current_sprite)
-	else:
-		return
+	_pointer = _actors.find(current_sprite)
+	if _pointer == null:
+		_goto_next()
 
 func get_pc():
 	return _actors[0]

@@ -37,6 +37,7 @@ const SKILL_DICT = {
 		"description": "Add one health.",
 		"dependency": null,
 		"implemented": true,
+		"repeatable": true
 	},
 	SKILL_GET_AMULET: {
 		"id": 3,

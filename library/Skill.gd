@@ -82,6 +82,8 @@ func _on_Schedule_turn_ended(current_sprite: Sprite2D) -> void:
 	if current_sprite.is_in_group(_new_GroupName.PC):
 		if _do_not_reset_cooldown_this_turn:
 			_do_not_reset_cooldown_this_turn = false
+			if _is_skill_primed:
+				_unprime_skill()
 			return
 		if _is_skill_primed:
 			_unprime_skill()
