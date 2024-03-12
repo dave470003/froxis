@@ -215,7 +215,7 @@ func _after_move():
 	if _ref_Shop.has_skill(_new_Skills.SKILL_ATTACK_3):
 		damage = 2
 		# after moving PC tries to attack dwarves in range in circular arc
-	display_message.emit("Sword sweep!")
+	display_message.emit("Sword sweep after move!")
 	for a in range(x - slash_radius, x + slash_radius + 1):
 		for b in range(y - slash_radius, y + slash_radius + 1):
 			if _ref_DungeonBoard.has_sprite(_new_GroupName.ENEMY, a, b):
@@ -244,14 +244,14 @@ func _after_move():
 			if enemy is Sprite2D:
 				var enemyPos = _new_ConvertCoord.vector_to_array(enemy.position)
 				await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, enemyPos[0], enemyPos[1])
-				pc_moved.emit("Threw Shuriken at " + enemy.name)
+				pc_moved.emit("Threw Shuriken at " + enemy._name)
 				# bounce once
 				if _ref_Shop.has_skill(_new_Skills.SKILL_SHURIKEN_5):
 					var enemy2 = _ref_DungeonBoard._get_closest_enemy_in_range(enemyPos[0], enemyPos[1], range)
 					if enemy is Sprite2D:
 						var enemy2Pos = _new_ConvertCoord.vector_to_array(enemy.position)
 						await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, enemy2Pos[0], enemy2Pos[1])
-						pc_moved.emit("Shuriken bounced to " + enemy2.name)
+						pc_moved.emit("Shuriken bounced to " + enemy2._name)
 
 	if _ref_DungeonBoard.has_sprite(_new_GroupName.SHRINE, x, y):
 		visit_shrine.emit()
@@ -264,10 +264,12 @@ func _try_singular_move(x: int, y: int):
 		pc_moved.emit("Cannot pass wall.")
 		return false
 	elif _ref_DungeonBoard.has_sprite(_new_GroupName.ENEMY, x, y):
+		var sprite = _ref_DungeonBoard.get_sprite(_new_GroupName.ENEMY, x, y)
 		var damage = 1
 		if _ref_Shop.has_skill(_new_Skills.SKILL_ATTACK_2):
 			damage = 2
 		set_process_unhandled_input(false)
+		display_message.emit("Dealing {0} damage to {1}".format([damage, sprite._name]))
 		await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, x, y, damage)
 		return false
 	else:
@@ -294,7 +296,7 @@ func try_teleport(x, y):
 
 	if _did_kill and _ref_Shop.has_skill(_new_Skills.SKILL_TELEPORT_3):
 		teleport_kill.emit()
-		display_message.emit("Teleport killed enemies - cooldown reset")
+		display_message.emit("Teleport killed enemies - cooldown is reset.")
 
 func _on_PCAttack_pc_attacked(msg):
 	_did_kill = true

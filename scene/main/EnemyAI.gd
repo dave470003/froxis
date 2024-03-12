@@ -16,6 +16,7 @@ var _new_Skills := preload("res://library/Skills.gd").new()
 
 signal enemy_warned
 signal enemy_attack
+signal display_message(message)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -36,11 +37,13 @@ func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
 		for i in range(0, movements):
 			move_to_pc(_pc, current_sprite)
 			if await check_for_traps(current_sprite) and _ref_Shop.has_skill(_new_Skills.SKILL_TRAP_5):
+				display_message.emit("Trap stuns {0}!".format([current_sprite._name]))
 				_ref_Schedule.end_turn()
 				return
 		if (current_sprite._health > 0):
 			if _pc_is_close(_pc, current_sprite):
 				await _animate_enemy_attack(_pc, current_sprite)
+				display_message.emit("{0} deals you damage!".format([current_sprite._name]))
 				enemy_attack.emit(1)
 
 	_ref_Schedule.end_turn()
@@ -67,7 +70,7 @@ func move_to_pc(pc: Sprite2D, current: Sprite2D):
 	elif (pc_pos[0] > current_pos[0]) and try_to_move(current, current_pos[0] + 1, current_pos[1]):
 		update_position(current, current_pos[0] + 1, current_pos[1])
 	elif (pc_pos[0] < current_pos[0]) and try_to_move(current, current_pos[0] - 1, current_pos[1]):
-		update_position(current, current_pos[0] - 1, pc_pos[1])
+		update_position(current, current_pos[0] - 1, current_pos[1])
 
 func try_to_move(current_sprite, x, y):
 	if not _ref_DungeonBoard.is_inside_dungeon(x, y):
@@ -91,23 +94,26 @@ func _animate_enemy_attack(pc: Sprite2D, enemy: Sprite2D):
 
 func check_for_traps(current):
 	if !_ref_Shop.has_skill(_new_Skills.SKILL_TRAP_4) and current.is_in_group(_new_GroupName.FLYING):
+		display_message.emit("{0} flies over the trap.".format([current._name]))
 		return false
 	var current_pos: Array = _new_ConvertCoord.vector_to_array(current.position)
 	if _ref_DungeonBoard.has_sprite(_new_GroupName.TRAP, current_pos[0], current_pos[1]):
-		await trap_detonate(current_pos[0], current_pos[1])
+		await trap_detonate(current_pos[0], current_pos[1], current)
 		return true
 	return false
 
-func trap_detonate(x, y):
+func trap_detonate(x, y, current_sprite):
 	var radius = 0
 	if _ref_Shop.has_skill(_new_Skills.SKILL_TRAP_3):
 		radius = 1
+	display_message.emit("{0} detonates a trap!".format([current_sprite._name]))
 	for a in range(x - radius, x + radius + 1):
 		for b in range(y - radius, y + radius + 1):
 			var sprite = _ref_DungeonBoard.get_sprite(_new_GroupName.ENEMY, a, b)
 			sprite.remove_health(1)
+			display_message.emit("The trap deals damage to {0}".format([sprite._name]))
 			if sprite._health <= 0:
 				var groups = sprite.get_groups()
 				for i in range(0, groups.size()):
 					await _ref_RemoveObject.remove(groups[i], a, b)
-			await _ref_RemoveObject.remove(_new_GroupName.TRAP, a, b)
+	await _ref_RemoveObject.remove(_new_GroupName.TRAP, x, y)

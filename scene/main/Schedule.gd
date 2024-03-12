@@ -47,7 +47,11 @@ func _on_RemoveObject_sprite_removed(remove_sprite: Sprite2D,
 	var current_sprite: Sprite2D = _get_current()
 
 	_actors.erase(remove_sprite)
-	_pointer = _actors.find(current_sprite)
+
+	if current_sprite != null and current_sprite != remove_sprite:
+		_pointer = _actors.find(current_sprite)
+	else:
+		return
 
 func get_pc():
 	return _actors[0]

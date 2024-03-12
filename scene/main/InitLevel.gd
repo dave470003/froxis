@@ -102,7 +102,8 @@ func _create_walls_and_floor():
 
 		if _ref_DungeonBoard.has_sprite(_new_GroupName.SHRINE, rand_x, rand_y) \
 			or _ref_DungeonBoard.has_sprite(_new_GroupName.PC, rand_x, rand_y) \
-			or _ref_DungeonBoard.has_sprite(_new_GroupName.LADDER, rand_x, rand_y):
+			or _ref_DungeonBoard.has_sprite(_new_GroupName.LADDER, rand_x, rand_y) \
+			or _ref_DungeonBoard.has_sprite(_new_GroupName.WALL, rand_x, rand_y):
 			continue
 		_create_sprite(Wall, [_new_GroupName.WALL], rand_x, rand_y)
 

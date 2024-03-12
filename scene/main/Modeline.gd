@@ -32,3 +32,6 @@ func _on_InitGame_start_game() -> void:
 
 func _on_PCMove_display_message(message: String) -> void:
 	text = message
+
+func _on_PCAttack_display_message(message: String) -> void:
+	text = message

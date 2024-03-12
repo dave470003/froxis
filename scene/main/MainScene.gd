@@ -179,6 +179,11 @@ const SIGNAL_BIND: Array = [
 		PC_MOVE,
 		MODELINE
 	],
+	[
+		"display_message", "_on_PCAttack_display_message",
+		PC_ATTACK,
+		MODELINE
+	],
 ]
 
 const NODE_REF: Array = [
