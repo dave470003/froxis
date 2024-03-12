@@ -8,6 +8,10 @@ const Shop := preload("res://scene/main/Shop.gd")
 const PC_ATTACK: String = "PCAttack"
 
 @onready var trap := preload("res://sprite/Trap.tscn") as PackedScene
+@onready var Slash := preload("res://sprite/Slash.tscn") as PackedScene
+@onready var Backslash := preload("res://sprite/Backslash.tscn") as PackedScene
+@onready var Dash := preload("res://sprite/Dash.tscn") as PackedScene
+@onready var Pipe := preload("res://sprite/Pipe.tscn") as PackedScene
 
 var _new_InputName := preload("res://library/InputName.gd").new()
 var _new_ConvertCoord := preload("res://library/ConvertCoord.gd").new()
@@ -216,6 +220,7 @@ func _after_move():
 		damage = 2
 		# after moving PC tries to attack dwarves in range in circular arc
 	display_message.emit("Sword sweep!")
+	await _animate_sweep(x, y, slash_radius)
 	for a in range(x - slash_radius, x + slash_radius + 1):
 		for b in range(y - slash_radius, y + slash_radius + 1):
 			if _ref_DungeonBoard.has_sprite(_new_GroupName.ENEMY, a, b):
@@ -298,3 +303,83 @@ func try_teleport(x, y):
 
 func _on_PCAttack_pc_attacked(msg):
 	_did_kill = true
+
+func _animate_sweep(x, y, range):
+	var cells_to_animate = {
+		"N": [],
+		"NW": [],
+		"W": [],
+		"SW": [],
+		"S": [],
+		"SE": [],
+		"E": [],
+		"NE": [],
+	}
+
+	_animate_pc_spin()
+
+	for a in range(x - range, x + range + 1):
+		for b in range(y - range, y + range + 1):
+			var abs = abs(x - a) + abs(y - b)
+			if abs > range:
+				continue
+			if a > x:
+				if b > y:
+					cells_to_animate["SE"].append([a, b])
+				elif b < y:
+					cells_to_animate["NE"].append([a, b])
+				else:
+					cells_to_animate["E"].append([a, b])
+			elif a < x:
+				if b > y:
+					cells_to_animate["SW"].append([a, b])
+				elif b < y:
+					cells_to_animate["NW"].append([a, b])
+				else:
+					cells_to_animate["W"].append([a, b])
+			else:
+				if b > y:
+					cells_to_animate["S"].append([a, b])
+				elif b < y:
+					cells_to_animate["N"].append([a, b])
+
+
+	for i in range(0, cells_to_animate.keys().size()):
+		var key = cells_to_animate.keys()[i]
+		var cells = cells_to_animate[key]
+		var prefab: PackedScene
+		var sprites_to_remove = []
+		
+		match key:
+			"N":
+				prefab = Pipe
+			"S":
+				prefab = Pipe
+			"NW":
+				prefab = Backslash
+			"SE":
+				prefab = Backslash
+			"NE":
+				prefab = Slash
+			"SW":
+				prefab = Slash
+			"W":
+				prefab = Dash
+			"E":
+				prefab = Dash
+
+		for j in range(0, cells.size()):
+			var cell = cells[j]
+			sprites_to_remove.append(_ref_InitLevel._create_silent_sprite(prefab, [], cell[0], cell[1]))
+
+		await get_tree().create_timer(0.02).timeout
+
+		for j in range(0, sprites_to_remove.size()):
+			sprites_to_remove[j].queue_free()
+
+func _animate_pc_spin():
+	var tween = _pc.create_tween()
+	tween.tween_property(_pc, "rotation", TAU, 0.16).as_relative()
+
+
+

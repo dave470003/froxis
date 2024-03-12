@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bk6dytwsq5jkx"]
+[gd_scene load_steps=17 format=3 uid="uid://bk6dytwsq5jkx"]
 
 [ext_resource type="Script" path="res://scene/main/MainScene.gd" id="1_x6a0h"]
 [ext_resource type="Script" path="res://scene/main/InitGame.gd" id="2_44ckb"]
@@ -11,7 +11,11 @@
 [ext_resource type="Script" path="res://scene/main/ReloadGame.gd" id="6_ceh1i"]
 [ext_resource type="Script" path="res://scene/main/DungeonBoard.gd" id="7_8pe1w"]
 [ext_resource type="Script" path="res://scene/main/RemoveObject.gd" id="9_trlfh"]
+[ext_resource type="PackedScene" uid="uid://dwd5wytptd1tw" path="res://sprite/Pipe.tscn" id="13_pmbnm"]
+[ext_resource type="PackedScene" uid="uid://1m87ee18qunw" path="res://sprite/Slash.tscn" id="14_gugyd"]
+[ext_resource type="PackedScene" uid="uid://c7r75shfef5yo" path="res://sprite/Backslash.tscn" id="15_eyers"]
 [ext_resource type="Script" path="res://scene/main/Shop.gd" id="15_v00bv"]
+[ext_resource type="PackedScene" uid="uid://bpr8cbmv7cuw8" path="res://sprite/Dash.tscn" id="16_7d4ui"]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_x6a0h")
@@ -49,3 +53,11 @@ script = ExtResource("9_trlfh")
 
 [node name="Shop" type="Node2D" parent="."]
 script = ExtResource("15_v00bv")
+
+[node name="Pipe" parent="." instance=ExtResource("13_pmbnm")]
+
+[node name="Slash" parent="." instance=ExtResource("14_gugyd")]
+
+[node name="Backslash" parent="." instance=ExtResource("15_eyers")]
+
+[node name="Dash" parent="." instance=ExtResource("16_7d4ui")]

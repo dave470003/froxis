@@ -34,6 +34,12 @@ func _ready() -> void:
 
 func _create_sprite(prefab: PackedScene, groups: Array, x: int, y: int,
 		x_offset: int = 0, y_offset: int = 0) -> void:
+	var sprite = _create_silent_sprite(prefab, groups, x, y, x_offset, y_offset)
+
+	sprite_created.emit(sprite)
+
+func _create_silent_sprite(prefab: PackedScene, groups: Array, x: int, y: int,
+		x_offset: int = 0, y_offset: int = 0) -> Sprite2D:
 	var sprite = prefab.instantiate()
 	sprite.position = _new_ConvertCoord.index_to_vector(x, y)
 	for i in range(0, groups.size()):
@@ -41,7 +47,7 @@ func _create_sprite(prefab: PackedScene, groups: Array, x: int, y: int,
 
 	add_child(sprite)
 
-	sprite_created.emit(sprite)
+	return sprite
 
 func _create_player():
 	_create_sprite(Player, [_new_GroupName.PC], _new_DungeonSize.PLAYER_SPAWN_X, _new_DungeonSize.PLAYER_SPAWN_Y)
