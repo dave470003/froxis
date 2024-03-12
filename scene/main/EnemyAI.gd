@@ -44,7 +44,6 @@ func _on_Schedule_turn_started(current_sprite: Sprite2D) -> void:
 			if _pc_is_close(_pc, current_sprite):
 				await _animate_enemy_attack(_pc, current_sprite)
 				display_message.emit("{0} deals you damage!".format([current_sprite._name]))
-				enemy_attack.emit(1)
 
 	_ref_Schedule.end_turn()
 

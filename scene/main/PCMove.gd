@@ -129,7 +129,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			for a in range(x - 1, x + 2):
 				for b in range(y - 1, y + 2):
 					await get_node(PC_ATTACK).attack(_new_GroupName.ENEMY, a, b, 1)
-		try_teleport(teleport_array[0], teleport_array[1])
+		await try_teleport(teleport_array[0], teleport_array[1])
 	else:
 		await _try_move(x, y, distance, dir)
 
