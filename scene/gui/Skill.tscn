@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://yj0d500vgn2k"]
+
+[ext_resource type="PackedScene" uid="uid://b1dg7we616mrp" path="res://sprite/FullCharge.tscn" id="1_myfqd"]
+[ext_resource type="PackedScene" uid="uid://b52hf4lbtsbgw" path="res://sprite/EmptyCharge.tscn" id="2_oee5y"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pg1t6"]
+bg_color = Color(0.156863, 0.172549, 0.203922, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[node name="Skill" type="PanelContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
+theme_override_styles/panel = SubResource("StyleBoxFlat_pg1t6")
+
+[node name="SkillMarginWrapper" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SkillMarginWrapper"]
+layout_mode = 2
+
+[node name="SkillName" type="Label" parent="SkillMarginWrapper/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Charge (c)
+"
+
+[node name="SkillCooldown" type="HBoxContainer" parent="SkillMarginWrapper/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 36)
+layout_mode = 2
+
+[node name="Charge1" parent="SkillMarginWrapper/VBoxContainer/SkillCooldown" instance=ExtResource("1_myfqd")]
+
+[node name="Charge2" parent="SkillMarginWrapper/VBoxContainer/SkillCooldown" instance=ExtResource("2_oee5y")]

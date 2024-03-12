@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://m0half4tiy3b"]
+
+[ext_resource type="FontFile" uid="uid://crvimr1k2x0ga" path="res://resources/FiraCode-Bold.ttf" id="1_n2fa8"]
+
+[resource]
+default_font = ExtResource("1_n2fa8")
+default_font_size = 24

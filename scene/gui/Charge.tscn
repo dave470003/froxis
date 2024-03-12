@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://dm4gafsyfolca"]
+
+[ext_resource type="Texture2D" uid="uid://ctffxeo6roouo" path="res://resources/curses_vector_24x36.png" id="1_87u1k"]
+[ext_resource type="Theme" uid="uid://6wwc8qstr4f2" path="res://scene/main/FiraTheme.tres" id="1_143jv"]
+[ext_resource type="StyleBox" uid="uid://d4di5sdd5pakq" path="res://scene/gui/ThinBorder.tres" id="2_r073j"]
+[ext_resource type="Script" path="res://scene/gui/Charge.gd" id="3_y1gla"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvrpu"]
+atlas = ExtResource("1_87u1k")
+region = Rect2(264, 468, 24, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15flk"]
+atlas = ExtResource("1_87u1k")
+region = Rect2(0, 396, 24, 36)
+
+[node name="ChargeSkill" type="PanelContainer"]
+modulate = Color(0.184314, 0.768627, 0.196078, 1)
+custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
+theme = ExtResource("1_143jv")
+theme_override_styles/panel = ExtResource("2_r073j")
+script = ExtResource("3_y1gla")
+
+[node name="SkillMarginWrapper" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SkillMarginWrapper"]
+layout_mode = 2
+
+[node name="SkillName" type="Label" parent="SkillMarginWrapper/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Charge (c)
+"
+
+[node name="SkillCooldown" type="HBoxContainer" parent="SkillMarginWrapper/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 36)
+layout_mode = 2
+
+[node name="Charge1" type="Sprite2D" parent="SkillMarginWrapper/VBoxContainer/SkillCooldown"]
+texture = SubResource("AtlasTexture_kvrpu")
+centered = false
+offset = Vector2(2.08165e-12, 2.08165e-12)
+
+[node name="Charge2" type="Sprite2D" parent="SkillMarginWrapper/VBoxContainer/SkillCooldown"]
+texture = SubResource("AtlasTexture_15flk")
+centered = false
+offset = Vector2(24, 2.08165e-12)

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://73kcwn1pmm0c"]
+[gd_scene load_steps=4 format=3 uid="uid://73kcwn1pmm0c"]
 
 [ext_resource type="Texture2D" uid="uid://ctffxeo6roouo" path="res://resources/curses_vector_24x36.png" id="1_vypg6"]
+[ext_resource type="Script" path="res://sprite/Dwarf.gd" id="2_3pypf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yd2fn"]
 atlas = ExtResource("1_vypg6")
@@ -10,3 +11,4 @@ region = Rect2(96, 216, 24, 36)
 modulate = Color(0.670588, 0.698039, 0.74902, 1)
 position = Vector2(180, 2.08165e-12)
 texture = SubResource("AtlasTexture_yd2fn")
+script = ExtResource("2_3pypf")

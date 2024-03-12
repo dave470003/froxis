@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwin0140cgh7b"]
+
+[ext_resource type="Texture2D" uid="uid://ctffxeo6roouo" path="res://resources/curses_vector_24x36.png" id="1_pxojt"]
+[ext_resource type="Script" path="res://sprite/Elf.gd" id="2_afrwp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbxis"]
+atlas = ExtResource("1_pxojt")
+region = Rect2(120, 216, 24, 36)
+
+[node name="Elf" type="Sprite2D"]
+modulate = Color(0.670588, 0.698039, 0.74902, 1)
+texture = SubResource("AtlasTexture_tbxis")
+script = ExtResource("2_afrwp")

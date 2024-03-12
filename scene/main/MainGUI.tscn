@@ -1,9 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://dpl6chwdfk2qh"]
+[gd_scene load_steps=15 format=3 uid="uid://dpl6chwdfk2qh"]
 
 [ext_resource type="Theme" uid="uid://6wwc8qstr4f2" path="res://scene/main/FiraTheme.tres" id="1_wwogm"]
 [ext_resource type="PackedScene" uid="uid://c0i6fvkncwr2i" path="res://scene/main/GUIText.tscn" id="2_07pmd"]
 [ext_resource type="Script" path="res://scene/main/Modeline.gd" id="3_dx6ku"]
 [ext_resource type="Script" path="res://scene/main/SidebarVBoxContainer.gd" id="3_y2vix"]
+[ext_resource type="Script" path="res://scene/main/Health.gd" id="5_orhn3"]
+[ext_resource type="PackedScene" uid="uid://dm4gafsyfolca" path="res://scene/gui/Charge.tscn" id="6_twbyy"]
+[ext_resource type="PackedScene" uid="uid://qm0a255xcye4" path="res://scene/gui/Trap.tscn" id="7_kx4lj"]
+[ext_resource type="PackedScene" uid="uid://63sghw7wvnps" path="res://scene/gui/Shuriken.tscn" id="8_hgq6a"]
+[ext_resource type="PackedScene" uid="uid://opglvlemqeg8" path="res://scene/gui/Invisibility.tscn" id="9_dmsgr"]
+[ext_resource type="PackedScene" uid="uid://cqivtgljq6t0s" path="res://scene/gui/Teleport.tscn" id="10_6ywmm"]
+[ext_resource type="FontFile" uid="uid://crvimr1k2x0ga" path="res://resources/FiraCode-Bold.ttf" id="11_f3jc6"]
+
+[sub_resource type="Theme" id="Theme_2yhrg"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hmug1"]
+
+[sub_resource type="Theme" id="Theme_fk3ht"]
+default_font = ExtResource("11_f3jc6")
+default_font_size = 20
 
 [node name="MainGUI" type="MarginContainer"]
 offset_right = 800.0
@@ -28,12 +43,64 @@ custom_minimum_size = Vector2(180, 2.08165e-12)
 layout_mode = 2
 script = ExtResource("3_y2vix")
 
-[node name="Turn" parent="MainHBoxContainer/SidebarVBoxContainer" instance=ExtResource("2_07pmd")]
+[node name="Level" type="Label" parent="MainHBoxContainer/SidebarVBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
-text = "Turn
-"
+
+[node name="Health" type="HBoxContainer" parent="MainHBoxContainer/SidebarVBoxContainer"]
+custom_minimum_size = Vector2(180, 2.08165e-12)
+layout_mode = 2
+size_flags_vertical = 4
+script = ExtResource("5_orhn3")
 
 [node name="Help" parent="MainHBoxContainer/SidebarVBoxContainer" instance=ExtResource("2_07pmd")]
 layout_mode = 2
-text = "Help"
+text = ""
+
+[node name="Skills" type="VBoxContainer" parent="MainHBoxContainer/SidebarVBoxContainer"]
+custom_minimum_size = Vector2(250, 2.08165e-12)
+layout_mode = 2
+
+[node name="TrapSkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("7_kx4lj")]
+visible = false
+layout_mode = 2
+
+[node name="InvisibilitySkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("9_dmsgr")]
+visible = false
+layout_mode = 2
+
+[node name="ChargeSkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("6_twbyy")]
+visible = false
+layout_mode = 2
+
+[node name="ShurikenSkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("8_hgq6a")]
+visible = false
+layout_mode = 2
+
+[node name="TeleportSkill" parent="MainHBoxContainer/SidebarVBoxContainer/Skills" instance=ExtResource("10_6ywmm")]
+layout_mode = 2
+
+[node name="BottomLabel" type="Label" parent="MainHBoxContainer/SidebarVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "r: credits
+u: tutorial"
+vertical_alignment = 2
+
+[node name="SplashScreen" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = SubResource("Theme_2yhrg")
+theme_override_styles/panel = SubResource("StyleBoxTexture_hmug1")
+
+[node name="ASCII" type="Label" parent="SplashScreen"]
+layout_mode = 2
+theme = SubResource("Theme_fk3ht")
+text = "     _,---.                 _,.---._           ,-.--, .=-.-.  ,-,--.  
+  .-`.' ,  \\  .-.,.---.   ,-.' , -  `..--.-.  /=/, .'/==/_ /,-.'-  _\\ 
+ /==/_  _.-' /==/  `   \\ /==/_,  ,  - \\==\\ -\\/=/- / |==|, |/==/_ ,_.' 
+/==/-  '..-.|==|-, .=., |==|   .=.     \\==\\ `-' ,/  |==|  |\\==\\  \\    
+|==|_ ,    /|==|   '='  /==|_ : ;=:  - ||==|,  - |  |==|- | \\==\\ -\\   
+|==|   .--' |==|- ,   .'|==| , '='     /==/   ,   \\ |==| ,| _\\==\\ ,\\  
+|==|-  |    |==|_  . ,'. \\==\\ -    ,_ /==/, .--, - \\|==|- |/==/\\/ _ | 
+/==/   \\    /==/  /\\ ,  ) '.='. -   .'\\==\\- \\/=/ , //==/. /\\==\\ - , / 
+`--`---'    `--`-`--`--'    `--`--''   `--`-'  `--` `--`-`  `--`---'  "

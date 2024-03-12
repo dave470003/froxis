@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://qm0a255xcye4"]
+
+[ext_resource type="PackedScene" uid="uid://yj0d500vgn2k" path="res://scene/gui/Skill.tscn" id="1_hi6gg"]
+[ext_resource type="Texture2D" uid="uid://ctffxeo6roouo" path="res://resources/curses_vector_24x36.png" id="2_gc41l"]
+[ext_resource type="Script" path="res://scene/gui/Trap.gd" id="2_hkotq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15flk"]
+atlas = ExtResource("2_gc41l")
+region = Rect2(0, 396, 24, 36)
+
+[node name="TrapSkill" instance=ExtResource("1_hi6gg")]
+modulate = Color(0.133333, 0.658824, 1, 1)
+custom_minimum_size = Vector2(106, 2.08165e-12)
+script = ExtResource("2_hkotq")
+
+[node name="SkillName" parent="SkillMarginWrapper/VBoxContainer" index="0"]
+text = "Lay Trap (l)"
+
+[node name="Charge3" type="Sprite2D" parent="SkillMarginWrapper/VBoxContainer/SkillCooldown" index="2"]
+position = Vector2(24, 2.08165e-12)
+texture = SubResource("AtlasTexture_15flk")
+centered = false
+offset = Vector2(24, 2.08165e-12)
+
+[node name="Charge4" type="Sprite2D" parent="SkillMarginWrapper/VBoxContainer/SkillCooldown" index="3"]
+position = Vector2(48, 2.08165e-12)
+texture = SubResource("AtlasTexture_15flk")
+centered = false
+offset = Vector2(24, 2.08165e-12)
