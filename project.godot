@@ -15,6 +15,11 @@ run/main_scene="res://scene/main/MainScene.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+driver/driver="Dummy"
+driver/mix_rate.web=1
+
 [display]
 
 window/size/viewport_width=900

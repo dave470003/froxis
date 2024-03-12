@@ -26,7 +26,6 @@ func reset():
 	_update_available_skills()
 
 func purchase_skill(skill_name: String):
-	print('here', skill_name)
 	var id = _get_id_for_skill(skill_name)
 	if id != null:
 		_bought_skills_ids.append(id)

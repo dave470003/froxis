@@ -108,6 +108,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			dir = _new_InputName.MOVE_DOWN
 	elif _is_reload_input(event):
 		print("reload")
+		return
 	else:
 		return
 
@@ -295,5 +296,5 @@ func try_teleport(x, y):
 		teleport_kill.emit()
 		display_message.emit("Teleport killed enemies - cooldown reset")
 
-func _on_PCAttack_pc_attacked():
+func _on_PCAttack_pc_attacked(msg):
 	_did_kill = true

@@ -27,8 +27,8 @@ func _on_PCMove_pc_moved(message: String) -> void:
 func _on_PCAttack_pc_attacked(message: String) -> void:
 	text = message
 
-func _on_InitGame_start_game(message: String) -> void:
-	text = message
+func _on_InitGame_start_game() -> void:
+	text =  "Game started"
 
 func _on_PCMove_display_message(message: String) -> void:
 	text = message

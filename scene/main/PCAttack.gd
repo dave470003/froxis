@@ -30,7 +30,6 @@ func attack(group_name: String, x: int, y: int, damage: int = 1) -> void:
 	var sprite = _ref_DungeonBoard.get_sprite(group_name, x, y)
 	var groups = sprite.get_groups()
 	await _animate_sprite_injury(sprite)
-	print(sprite)
 	sprite.remove_health(damage)
 	if sprite._health <= 0:
 		for i in range(0, groups.size()):
